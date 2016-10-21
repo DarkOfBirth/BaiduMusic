@@ -1,137 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.example.administrator.baidumusic.MainActivity">
-
-    <LinearLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                tools:context=".main.MainActivity"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+    <!--<include layout="@layout/main_frag"/>-->
+    <FrameLayout
+        android:id="@+id/main_fl"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#1295f2">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/iv_more_home"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="7dp"
-            android:layout_weight="1"
-            android:background="@null"
-            android:src="@drawable/bt_localsonglist_selector" />
+    </FrameLayout>
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tab_home"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="4">
-
-        </android.support.design.widget.TabLayout>
-
-        <ImageView
-            android:id="@+id/iv_search_home"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="9dp"
-            android:layout_weight="1"
-            android:src="@drawable/titlebar_search" />
-    </LinearLayout>
-
-    <android.support.v4.view.ViewPager
-        android:id="@+id/vp_home"
+    <include
+        android:id="@+id/player_bottom"
+        layout="@layout/music_player"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="8">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
 
-    </android.support.v4.view.ViewPager>
+        />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <LinearLayout
-            android:id="@+id/ll_music_bottom"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="4">
-
-            <ImageView
-                android:id="@+id/iv_music_pic"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@mipmap/ic_launcher" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:gravity="center"
-                android:orientation="vertical"
-
-                >
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:background="#ca2525"
-                    android:orientation="vertical"
-
-                    >
-
-                    <TextView
-                        android:id="@+id/tv_music_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Until you" />
-
-                    <TextView
-                        android:id="@+id/tv_music_singer"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
-                        android:text="肖恩" />
-                </LinearLayout>
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <ImageButton
-            android:id="@+id/ib_music_play"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.9"
-           android:scaleType="fitXY"
-            android:layout_margin="5dp"
-            android:background="@null"
-            android:src="@mipmap/bt_minibar_pause_normal"
-            />
-
-        <ImageButton
-            android:id="@+id/ib_music_next"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.9"
-            android:scaleType="fitXY"
-            android:layout_margin="5dp"
-            android:background="@null"
-            android:src="@mipmap/bt_minibar_next_normal"/>
-
-        <ImageButton
-            android:id="@+id/ib_music_list"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:background="@null"
-            android:scaleType="fitXY"
-            android:layout_margin="5dp"
-            android:src="@mipmap/bt_minibar_playinglist_normal"
-             />
-
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

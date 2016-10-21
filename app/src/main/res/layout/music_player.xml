@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <LinearLayout
+            android:id="@+id/ll_music_bottom"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4">
+
+            <ImageView
+                android:id="@+id/iv_music_pic"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:src="@mipmap/ic_launcher" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:gravity="center"
+                android:orientation="vertical"
+
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:background="#ca2525"
+                    android:orientation="vertical"
+
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_music_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Until you" />
+
+                    <TextView
+                        android:id="@+id/tv_music_singer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:text="肖恩" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/ib_music_play"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.9"
+            android:scaleType="fitXY"
+            android:layout_margin="5dp"
+            android:background="@null"
+            android:src="@mipmap/bt_minibar_pause_normal"
+            />
+
+        <ImageButton
+            android:id="@+id/ib_music_next"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.9"
+            android:scaleType="fitXY"
+            android:layout_margin="5dp"
+            android:background="@null"
+            android:src="@mipmap/bt_minibar_next_normal"/>
+
+        <ImageButton
+            android:id="@+id/ib_music_list"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:scaleType="fitXY"
+            android:layout_margin="5dp"
+            android:src="@mipmap/bt_minibar_playinglist_normal"
+            />
+
+    </LinearLayout>
+</RelativeLayout>

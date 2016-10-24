@@ -1,47 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#1295f2">
-
-        <ImageView
-            android:id="@+id/iv_more_home"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="7dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@null"
-            android:src="@drawable/bt_localsonglist_selector"/>
+            android:background="#1295f2">
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tab_home"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="4">
+            <ImageView
+                android:id="@+id/iv_more_home"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="7dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:src="@drawable/bt_localsonglist_selector"/>
 
-        </android.support.design.widget.TabLayout>
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tab_home"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4">
 
-        <ImageView
-            android:id="@+id/iv_search_home"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="9dp"
-            android:layout_weight="1"
-            android:src="@drawable/titlebar_search"/>
+            </android.support.design.widget.TabLayout>
+
+            <ImageView
+                android:id="@+id/iv_search_home"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="9dp"
+                android:layout_weight="1"
+                android:src="@drawable/titlebar_search"/>
+        </LinearLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_home"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="9">
+
+        </android.support.v4.view.ViewPager>
     </LinearLayout>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/vp_home"
+    <FrameLayout
+        android:id="@+id/main_frag_frame"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="9">
+        android:layout_height="match_parent">
 
-    </android.support.v4.view.ViewPager>
+    </FrameLayout>
 
-</LinearLayout>
+
+</RelativeLayout>

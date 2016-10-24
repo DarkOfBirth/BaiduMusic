@@ -8,7 +8,9 @@
     <FrameLayout
         android:id="@+id/main_fl"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/player_bottom"
+        android:background="#ffffff">
 
     </FrameLayout>
 
@@ -18,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-
         />
+
 
 </RelativeLayout>

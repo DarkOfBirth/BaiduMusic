@@ -3,7 +3,11 @@ package com.example.administrator.baidumusic.main;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.example.administrator.baidumusic.R;
@@ -18,19 +22,21 @@ import java.util.ArrayList;
 /**
  * Created by dllo on 16/10/21.
  */
-public class MainFragment extends BaseFragment {
+public class MainFragment extends BaseFragment implements View.OnClickListener {
 
     private ViewPager vpHome;
     private ImageView ivHomeMore;
     private ImageView ivHomeSearch;
     private TabLayout tabHome;
     private ArrayList<Fragment> fragmentArrayList;
-    private FragmentManager manager;
+
+
 
     @Override
     protected int getLayout() {
         return R.layout.main_frag;
     }
+
     @Override
     protected void initView() {
         vpHome = bindView(R.id.vp_home);
@@ -42,6 +48,7 @@ public class MainFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+         FragmentManager manager;
         manager = getChildFragmentManager();
         fragmentArrayList = new ArrayList<>();
         fragmentArrayList.add(new MineFragment());
@@ -51,8 +58,31 @@ public class MainFragment extends BaseFragment {
 
         MainFragmentPagerAdapter mainFragAdapter = new MainFragmentPagerAdapter(manager);
         mainFragAdapter.setfragmentArrayList(fragmentArrayList);
-        tabHome.setupWithViewPager(vpHome);
         vpHome.setAdapter(mainFragAdapter);
+        tabHome.setupWithViewPager(vpHome);
+
+        ivHomeMore.setOnClickListener(this);
+
 
     }
+
+
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.iv_more_home:
+                FragmentManager manager = getChildFragmentManager();
+                FragmentTransaction transaction =  manager.beginTransaction();
+                MoreFragment moreFragment = new MoreFragment();
+                View view1 = LayoutInflater.from(mContext).inflate(R.layout.activity_main,null);
+                FrameLayout frameLayout = (FrameLayout) view1.findViewById(R.id.main_fl);
+                transaction.add(R.id.main_frag_frame,moreFragment,"1");
+                transaction.addToBackStack("1");
+                transaction.commit();
+
+                break;
+        }
+    }
+
 }

@@ -19,7 +19,8 @@ public class MainActivity extends BaseActivity {
 
         transaction = manager.beginTransaction();
         Fragment mainFragment = new MainFragment();
-        transaction.replace(R.id.main_fl,mainFragment);
+        transaction.add(R.id.main_fl,mainFragment);
+
         transaction.commit();
 
     }
@@ -32,5 +33,13 @@ public class MainActivity extends BaseActivity {
     @Override
     protected int getLayout() {
         return R.layout.activity_main;
+    }
+
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0 ){
+            getSupportFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
     }
 }

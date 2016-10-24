@@ -5,9 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.example.administrator.baidumusic.R;
@@ -72,13 +70,12 @@ public class MainFragment extends BaseFragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_more_home:
-                FragmentManager manager = getChildFragmentManager();
+                FragmentManager manager = getActivity().getSupportFragmentManager();
                 FragmentTransaction transaction =  manager.beginTransaction();
                 MoreFragment moreFragment = new MoreFragment();
-                View view1 = LayoutInflater.from(mContext).inflate(R.layout.activity_main,null);
-                FrameLayout frameLayout = (FrameLayout) view1.findViewById(R.id.main_fl);
-                transaction.add(R.id.main_frag_frame,moreFragment,"1");
-                transaction.addToBackStack("1");
+
+                transaction.add(R.id.main_fl,moreFragment);
+                transaction.addToBackStack(null);
                 transaction.commit();
 
                 break;

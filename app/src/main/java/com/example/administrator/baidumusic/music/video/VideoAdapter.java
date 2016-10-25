@@ -18,10 +18,10 @@ import com.example.administrator.baidumusic.tools.SingleVolley;
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyViewHolder> {
     private Context context;
 
-    private VideoAdapter listBeen;
-    public void setListBeen(VideoAdapter listBeen) {
+    private VideoBean bean;
+    public void setListBeen(VideoBean bean) {
         Log.d("VideoAdapter", "执行");
-        this.listBeen = listBeen;
+        this.bean = bean;
         notifyDataSetChanged();
     }
 
@@ -47,26 +47,30 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(VideoAdapter.MyViewHolder myViewHolder, int i) {
-
+       myViewHolder.title.setText(bean.getResult().getMv_list().get(i).getTitle());
+        myViewHolder.artist.setText(bean.getResult().getMv_list().get(i).getArtist());
+        SingleVolley.getInstance().getImage(bean.getResult().getMv_list().get(i).getThumbnail(),
+                myViewHolder.imageView);
     }
 
     @Override
     public int getItemCount() {
         // Log.d("VideoAdapter", "listBeen.getContent().size():" + listBeen.getContent().size());
-        return listBeen == null ? 0 : listBeen.getContent().size();
+        return bean == null ? 0 : bean.getResult().getMv_list().size();
     }
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private final ImageView imageView;
-        private final TextView listnum;
+        private final TextView artist;
         private final TextView title;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            imageView = (ImageView) itemView.findViewById(R.id.iv_item_musiclist);
-            listnum = (TextView) itemView.findViewById(R.id.tv_item_listnum);
-            title = (TextView) itemView.findViewById(R.id.tv_title_item_musiclist);
+            imageView = (ImageView) itemView.findViewById(R.id.iv_item_video);
+
+            artist = (TextView) itemView.findViewById(R.id.tv_artist_item_video);
+            title = (TextView) itemView.findViewById(R.id.tv_title_item_video);
         }
     }
 }

@@ -66,21 +66,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:src="@mipmap/ic_mymusic_local_normal"
+            android:src="@mipmap/icon_option_setting_my_message"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="本地音乐"/>
+            android:text="我的消息"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="88首"
-            android:textColor="#978d8d"/>
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -108,21 +102,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:src="@mipmap/ic_mymusic_local_normal"
+            android:src="@mipmap/ic_setting_vip"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="本地音乐"/>
+            android:text="成为白金VIP"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="88首"
-            android:textColor="#978d8d"/>
+
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -150,21 +139,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:src="@mipmap/ic_mymusic_local_normal"
+            android:src="@mipmap/icon_option_setting_setting"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="本地音乐"/>
+            android:text="设置"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="88首"
-            android:textColor="#978d8d"/>
+
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -192,21 +176,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:src="@mipmap/ic_mymusic_local_normal"
+            android:src="@mipmap/icon_option_setting_auto_close"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="本地音乐"/>
+            android:text="定时关闭"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="88首"
-            android:textColor="#978d8d"/>
+
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -234,21 +213,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:src="@mipmap/ic_mymusic_local_normal"
+            android:src="@mipmap/setting_tool_bt_setup_import"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="本地音乐"/>
+            android:text="电脑导歌"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="88首"
-            android:textColor="#978d8d"/>
+
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -276,21 +250,53 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:src="@mipmap/ic_mymusic_local_normal"
+            android:src="@mipmap/icon_option_setting_action_zone"
             />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="本地音乐"/>
+            android:text="活动专区"/>
+
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:src="@mipmap/icon_to_my_ktv"
+                />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:src="@mipmap/icon_option_setting_app_recommend"
+            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="88首"
-            android:textColor="#978d8d"/>
+            android:text="精品应用"/>
+
+
 
         <RelativeLayout
             android:layout_width="wrap_content"

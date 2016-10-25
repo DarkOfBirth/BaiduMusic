@@ -37,6 +37,6 @@ public class SingleVolley {
 
 // 图片
     public void getImage(String url, ImageView imageView){
-        imageLoader.get(url, ImageLoader.getImageListener(imageView, R.mipmap.ic_launcher,R.mipmap.ic_launcher));
+        imageLoader.get(url, ImageLoader.getImageListener(imageView, R.mipmap.ic_mymusic_picture_down_2,R.mipmap.ic_launcher));
     }
 }

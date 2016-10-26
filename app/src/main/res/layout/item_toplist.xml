@@ -39,7 +39,7 @@
             android:id="@+id/tv_name_toplist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+android:textColorLink="#000000"
 
             android:text="111"
             android:textSize="22sp"/>

@@ -22,6 +22,7 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.MyVi
     public void setListBeen(MusicListBean listBeen) {
         Log.d("MusicListAdapter", "执行");
         this.listBeen = listBeen;
+        Log.d("MusicListAdapter", "listBeen:" + listBeen);
         notifyDataSetChanged();
     }
 
@@ -44,15 +45,16 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.MyVi
 
     @Override
     public void onBindViewHolder(MusicListAdapter.MyViewHolder myViewHolder, int i) {
-        SingleVolley.getInstance().getImage(listBeen.getContent().get(i).getPic_300(),myViewHolder.imageView);
-        myViewHolder.title.setText(listBeen.getContent().get(i).getTitle());
-        myViewHolder.listnum.setText(listBeen.getContent().get(i).getListenum());
+        SingleVolley.getInstance().getImage(listBeen.getDiyInfo().get(i).getList_pic_huge(),myViewHolder.imageView);
+        myViewHolder.title.setText(listBeen.getDiyInfo().get(i).getTitle());
+        myViewHolder.listnum.setText(listBeen.getDiyInfo().get(i).getListen_num());
     }
 
     @Override
     public int getItemCount() {
        // Log.d("MusicListAdapter", "listBeen.getContent().size():" + listBeen.getContent().size());
-        return listBeen == null ? 0 : listBeen.getContent().size();
+        Log.d("MusicListAdapter", "listBeen.getContent().size():" + listBeen.getDiyInfo().size());
+        return listBeen == null ? 0 : listBeen.getDiyInfo().size();
     }
 
 

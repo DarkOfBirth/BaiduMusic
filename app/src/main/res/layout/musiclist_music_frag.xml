@@ -34,15 +34,22 @@
                 android:layout_alignParentRight="true">
 
                 <TextView
+                    android:id="@+id/hot_music_list"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"
+                    android:textColor="@color/colorTextBlue"
                     android:text="最热"
                     android:textSize="15sp"/>
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="  |  "/>
+                <TextView
+                    android:id="@+id/last_music_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorTextGray"
                     android:text="最新"
                     android:textSize="15sp"/>
             </LinearLayout>

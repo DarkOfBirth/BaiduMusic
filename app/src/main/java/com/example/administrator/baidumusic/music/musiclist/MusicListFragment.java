@@ -60,7 +60,7 @@ public class MusicListFragment extends BaseFragment implements View.OnClickListe
                     @Override
                     public void onResponse(MusicListBean response) {
                       //  Log.d("MusicListFragment", "response.getContent().size():" + response.getContent().size());
-                    
+
                         Log.d("MusicListFragment", "response:" + response);
                         adapter.setListBeen(response);
                     }

@@ -47,13 +47,13 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.MyVi
     public void onBindViewHolder(MusicListAdapter.MyViewHolder myViewHolder, int i) {
         SingleVolley.getInstance().getImage(listBeen.getDiyInfo().get(i).getList_pic_huge(),myViewHolder.imageView);
         myViewHolder.title.setText(listBeen.getDiyInfo().get(i).getTitle());
-        myViewHolder.listnum.setText(listBeen.getDiyInfo().get(i).getListen_num());
+        myViewHolder.listnum.setText(listBeen.getDiyInfo().get(i).getListen_num() + " ");
     }
 
     @Override
     public int getItemCount() {
        // Log.d("MusicListAdapter", "listBeen.getContent().size():" + listBeen.getContent().size());
-        Log.d("MusicListAdapter", "listBeen.getContent().size():" + listBeen.getDiyInfo().size());
+//        Log.d("MusicListAdapter", "listBeen.getContent().size():" + listBeen.getDiyInfo().size());
         return listBeen == null ? 0 : listBeen.getDiyInfo().size();
     }
 

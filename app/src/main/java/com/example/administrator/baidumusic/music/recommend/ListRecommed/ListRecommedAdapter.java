@@ -1,7 +1,8 @@
-package com.example.administrator.baidumusic.music.recommend.ListRecommed;
+package com.example.administrator.baidumusic.music.recommend.listrecommed;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,9 @@ public class ListRecommedAdapter extends RecyclerView.Adapter<ListRecommedAdapte
     @Override
     public void onBindViewHolder(ListRecommedAdapter.MyViewHolder holder, int position) {
         holder.listnum.setText( bean.getResult().getDiy().getResult().get(position).getListenum() + "");
-        holder.title.setText(bean.getResult().getDiy().getResult().get(position).getTitle());
+        String title = bean.getResult().getDiy().getResult().get(position).getTitle();
+        Log.d("Sysout", title);
+        holder.title.setText(title);
         SingleVolley.getInstance().getImage(bean.getResult().getDiy().getResult().get(position)
                 .getPic(),holder.image);
     }

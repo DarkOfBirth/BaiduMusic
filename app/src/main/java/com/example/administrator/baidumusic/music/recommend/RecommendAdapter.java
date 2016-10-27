@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.administrator.baidumusic.R;
-import com.example.administrator.baidumusic.music.recommend.ListRecommed.ListRecommedAdapter;
+import com.example.administrator.baidumusic.music.recommend.hotalbum.HotAlbumAdapter;
+import com.example.administrator.baidumusic.music.recommend.listrecommed.ListRecommedAdapter;
+import com.example.administrator.baidumusic.music.recommend.newcd.NewCdAdapter;
 import com.example.administrator.baidumusic.music.recommend.slideshow.SlideShowAdapter;
 import com.example.administrator.baidumusic.tools.SingleVolley;
 
@@ -55,11 +57,35 @@ public class RecommendAdapter extends RecyclerView.Adapter {
                 return holder;
             }
             // 歌单推荐 listRecommed
-            case 2:{
-                View view = LayoutInflater.from(context).inflate(R.layout.list_recommed,parent, false);
+            case 2: {
+                View view = LayoutInflater.from(context).inflate(R.layout.list_recommed, parent, false);
                 holder = new ListRecommedViewHolder(view);
                 return holder;
             }
+            // 新碟上架 newCD
+            case 3: {
+                View view = LayoutInflater.from(context).inflate(R.layout.new_cd, parent, false);
+                holder = new NewCDViewHolder(view);
+                return holder;
+            }
+            // 热销专辑 hotAlbum
+            case 4:{
+                View view = LayoutInflater.from(context).inflate(R.layout.hot_album, parent,false);
+                holder = new HotAlbumViewHolder(view);
+                return holder;
+            }
+            // 场景电台 scene
+            case 5:{
+                //View view = LayoutInflater.from(context).inflate(R.layout.)
+            }
+            // 今日推荐歌曲
+            case 6:{
+                View view = LayoutInflater.from(context).inflate(R.layout.today_recommed_music,
+                        parent, false);
+                holder = new ToadyMusicViewHolder(view);
+                return holder;
+            }
+
         }
 
         return null;
@@ -96,23 +122,53 @@ public class RecommendAdapter extends RecyclerView.Adapter {
                 for (int i = 0; i < 4; i++) {
                     imgurl[i] = recommendBean.getResult().getEntry().getResult().get(i).getIcon();
                 }
-                SingleVolley.getInstance().getImage(imgurl[0],musicholder.singer);
-                SingleVolley.getInstance().getImage(imgurl[1],musicholder.musicType);
-                SingleVolley.getInstance().getImage(imgurl[2],musicholder.transceiver);
-                SingleVolley.getInstance().getImage(imgurl[3],musicholder.vip);
+                SingleVolley.getInstance().getImage(imgurl[0], musicholder.singer);
+                SingleVolley.getInstance().getImage(imgurl[1], musicholder.musicType);
+                SingleVolley.getInstance().getImage(imgurl[2], musicholder.transceiver);
+                SingleVolley.getInstance().getImage(imgurl[3], musicholder.vip);
                 break;
             }
+            // 歌单推荐
             case 2: {
 
                 ListRecommedViewHolder listholder = (ListRecommedViewHolder) holder;
 
                 ListRecommedAdapter adapter = new ListRecommedAdapter(context);
-                GridLayoutManager manager = new GridLayoutManager(context,3);
+                GridLayoutManager manager = new GridLayoutManager(context, 3);
                 adapter.setBean(recommendBean);
                 listholder.rvListRecommend.setAdapter(adapter);
                 listholder.rvListRecommend.setLayoutManager(manager);
                 break;
             }
+            // 新碟上架 new cd
+
+            case 3: {
+                NewCDViewHolder cdViewHolder = (NewCDViewHolder) holder;
+                NewCdAdapter adapter = new NewCdAdapter(context);
+                adapter.setBean(recommendBean);
+                cdViewHolder.newcd.setAdapter(adapter);
+                GridLayoutManager manager = new GridLayoutManager(context, 3);
+                cdViewHolder.newcd.setLayoutManager(manager);
+                break;
+
+            }
+            // 热销专辑
+            case 4: {
+                HotAlbumViewHolder hotViewHolder = (HotAlbumViewHolder) holder;
+                HotAlbumAdapter adapter = new HotAlbumAdapter(context);
+                adapter.setBean(recommendBean);
+                hotViewHolder.hotAlbum.setAdapter(adapter);
+                break;
+            }
+
+            // 今日推荐歌曲
+            case 6:{
+                ToadyMusicViewHolder todayViewholer = (ToadyMusicViewHolder) holder;
+                TodayMusicAdapter adapter = new TodayMusicAdapter(context);
+
+                todayViewholer.todayMusic.setAdapter();
+            }
+
         }
 
     }
@@ -120,7 +176,7 @@ public class RecommendAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
 //        return recommendBean.getModule().size();12
-        return recommendBean == null ? 0 : 2;
+        return recommendBean == null ? 0 : 5;
     }
 
     /**
@@ -167,6 +223,45 @@ public class RecommendAdapter extends RecyclerView.Adapter {
             super(view);
             rvListRecommend = (RecyclerView) view.findViewById(R.id.rv_list_recommend);
 
+        }
+    }
+
+    /**
+     * 新碟上架的viewholder
+     */
+    private class NewCDViewHolder extends RecyclerView.ViewHolder {
+
+        private final RecyclerView newcd;
+
+        public NewCDViewHolder(View view) {
+            super(view);
+            newcd = (RecyclerView) view.findViewById(R.id.rv_new_cd);
+        }
+    }
+
+    /**
+     * 热销专辑的viewholder
+     */
+    private class HotAlbumViewHolder extends RecyclerView.ViewHolder {
+        private final RecyclerView hotAlbum;
+
+        public HotAlbumViewHolder(View view) {
+            super(view);
+            hotAlbum = (RecyclerView) view.findViewById(R.id.rv_hot_album);
+
+        }
+    }
+
+    /**
+     * 今日推荐歌曲
+     */
+    private class ToadyMusicViewHolder extends RecyclerView.ViewHolder{
+
+        private final RecyclerView todayMusic;
+
+        public ToadyMusicViewHolder(View view) {
+            super(view);
+            todayMusic = (RecyclerView) view.findViewById(R.id.rv_today_recommend_music);
         }
     }
 }

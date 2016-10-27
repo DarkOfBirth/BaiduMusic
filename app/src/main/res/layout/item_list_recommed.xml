@@ -14,9 +14,10 @@
 
         <ImageView
             android:id="@+id/iv_item_list_recommed"
-            android:layout_width="300dp"
-            android:layout_height="150dp"
+            android:layout_width="wrap_content"
+            android:layout_height="120dp"
             android:scaleType="fitXY"
+
             android:src="@mipmap/ic_mymusic_picture_down_2"
             />
 

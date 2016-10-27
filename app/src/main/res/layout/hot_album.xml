@@ -9,36 +9,25 @@
         android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-   >
+        android:weightSum="1">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_marginLeft="15dp"
-            android:src="@mipmap/ic_recommend_song" />
+            android:src="@mipmap/hot" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:textColor="#000000"
-            android:text="歌曲推荐" />
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="更多"
-            android:drawableRight="@mipmap/icon_to_my_ktv"/>
+            android:text="热销专辑" />
 
-
-        </RelativeLayout>
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_list_recommend"
+        android:id="@+id/rv_hot_album"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >

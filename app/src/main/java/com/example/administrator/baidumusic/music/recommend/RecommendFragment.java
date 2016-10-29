@@ -20,7 +20,7 @@ public class RecommendFragment extends BaseFragment {
 
     @Override
     protected int getLayout() {
-        return R.layout.recommend_music_frag;
+        return R.layout.frag_recommend_music;
     }
 
     @Override

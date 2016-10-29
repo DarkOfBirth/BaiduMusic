@@ -28,7 +28,7 @@ public class VideoFragment extends BaseFragment implements View.OnClickListener 
 
     @Override
     protected int getLayout() {
-        return R.layout.video_music_frag;
+        return R.layout.frag_video_music;
     }
 
     @Override

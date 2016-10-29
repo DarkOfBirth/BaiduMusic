@@ -1,4 +1,4 @@
-package com.example.administrator.baidumusic.main;
+package com.example.administrator.baidumusic.base;
 
 import android.app.Application;
 import android.content.Context;

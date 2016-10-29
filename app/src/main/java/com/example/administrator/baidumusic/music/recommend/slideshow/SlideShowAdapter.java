@@ -19,19 +19,11 @@ import java.util.ArrayList;
 public class SlideShowAdapter extends PagerAdapter {
     private Context context;
     private ArrayList<String> stringList;
-    private ArrayList<ImageView> views;
+
 
     public void setStringList(ArrayList<String> stringList) {
         this.stringList = stringList;
         Log.d("SlideShowAdapter", "stringList.size():" + stringList.size());
-
-        views = new ArrayList<>();
-        for (int i = 0; i < stringList.size(); i++) {
-            Log.d("SlideShowAdapter", stringList.get(i));
-            ImageView imageView = new ImageView(context);
-            SingleVolley.getInstance().getImage(stringList.get(i), imageView);
-            views.add(imageView);
-        }
         notifyDataSetChanged();
     }
 
@@ -42,7 +34,8 @@ public class SlideShowAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return stringList == null ? 0 : stringList.size();
+        Log.d("SlideShowAdapter", "进入轮播图适配器");
+        return stringList == null ? 0 : Integer.MAX_VALUE;
     }
 
     @Override
@@ -52,12 +45,11 @@ public class SlideShowAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        try {
-
-            container.addView(views.get(position % views.size()));
-        } catch (Exception e) {
-        }
-        return container.getChildAt(position);
+        Log.d("SlideShowAdapter", "position:" + position);
+        ImageView image = new ImageView(container.getContext());
+        SingleVolley.getInstance().getImage(stringList.get(position % stringList.size()),image);
+        container.addView(image);
+        return image;
 
     }
 
@@ -65,7 +57,18 @@ public class SlideShowAdapter extends PagerAdapter {
     public void destroyItem(ViewGroup container, int position, Object object) {
         Log.d("SlideShowAdapter", "position:" + position);
        //  container.removeView(views.get(position));
+        if(container.getChildAt(position) == object){
+            container.removeViewAt(position);
+        }
 
+    }
+
+    /**
+     * 获取图片的数量
+     * @return
+     */
+    public int getImageCount() {
+        return stringList.size();
     }
 
 

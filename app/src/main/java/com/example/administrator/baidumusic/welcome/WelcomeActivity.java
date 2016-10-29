@@ -28,7 +28,7 @@ public class WelcomeActivity extends BaseActivity {
 
     @Override
     protected int getLayout() {
-        return R.layout.welcome;
+        return R.layout.activity_welcome;
     }
 
     class Counter extends CountDownTimer {
@@ -53,6 +53,7 @@ public class WelcomeActivity extends BaseActivity {
         public void onFinish() {
             Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
             startActivity(intent);
+        WelcomeActivity.this.finish();
 
         }
     }
@@ -60,6 +61,5 @@ public class WelcomeActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        this.finish();
     }
 }

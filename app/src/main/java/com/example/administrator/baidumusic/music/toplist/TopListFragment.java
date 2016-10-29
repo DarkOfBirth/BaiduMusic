@@ -20,7 +20,7 @@ public class TopListFragment extends BaseFragment {
 
     @Override
     protected int getLayout() {
-        return R.layout.toplist_music_frag;
+        return R.layout.frag_toplist_music;
     }
 
     @Override

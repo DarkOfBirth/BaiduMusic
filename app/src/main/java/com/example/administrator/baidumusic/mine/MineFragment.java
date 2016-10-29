@@ -9,7 +9,7 @@ import com.example.administrator.baidumusic.base.BaseFragment;
 public class MineFragment extends BaseFragment {
     @Override
     protected int getLayout() {
-        return R.layout.mine_frag;
+        return R.layout.frag_mine;
     }
 
     @Override

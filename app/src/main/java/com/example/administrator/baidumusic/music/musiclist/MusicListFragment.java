@@ -25,7 +25,7 @@ public class MusicListFragment extends BaseFragment implements View.OnClickListe
 
     @Override
     protected int getLayout() {
-        return R.layout.musiclist_music_frag;
+        return R.layout.frag_musiclist_music;
     }
 
     @Override

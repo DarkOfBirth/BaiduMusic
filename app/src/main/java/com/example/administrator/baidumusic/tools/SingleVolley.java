@@ -6,7 +6,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.example.administrator.baidumusic.R;
-import com.example.administrator.baidumusic.main.MyApp;
+import com.example.administrator.baidumusic.base.MyApp;
 
 /**
  *

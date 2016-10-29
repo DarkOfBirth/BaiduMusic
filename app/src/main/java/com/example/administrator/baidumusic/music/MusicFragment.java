@@ -23,7 +23,7 @@ public class MusicFragment extends BaseFragment {
     private ViewPager vpMusicFrag;
     @Override
     protected int getLayout() {
-        return R.layout.music_frag;
+        return R.layout.frag_music;
     }
 
     @Override

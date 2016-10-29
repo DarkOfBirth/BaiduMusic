@@ -9,7 +9,7 @@ import com.example.administrator.baidumusic.base.BaseFragment;
 public class LiveFragment extends BaseFragment {
     @Override
     protected int getLayout() {
-        return R.layout.live_frag;
+        return R.layout.frag_live;
     }
 
     @Override

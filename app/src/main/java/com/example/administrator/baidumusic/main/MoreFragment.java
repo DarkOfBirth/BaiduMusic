@@ -10,7 +10,7 @@ public class MoreFragment extends BaseFragment {
 
     @Override
     protected int getLayout() {
-        return R.layout.more_frag;
+        return R.layout.frag_more;
     }
 
     @Override

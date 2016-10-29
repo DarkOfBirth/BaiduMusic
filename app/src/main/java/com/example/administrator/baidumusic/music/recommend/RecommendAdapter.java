@@ -4,20 +4,25 @@ import android.content.Context;
 import android.os.CountDownTimer;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.example.administrator.baidumusic.R;
 import com.example.administrator.baidumusic.music.recommend.hotalbum.HotAlbumAdapter;
+import com.example.administrator.baidumusic.music.recommend.hotmv.HotMvAdapter;
 import com.example.administrator.baidumusic.music.recommend.listrecommed.ListRecommedAdapter;
+import com.example.administrator.baidumusic.music.recommend.musicshow.MusicShowAdapter;
 import com.example.administrator.baidumusic.music.recommend.newcd.NewCdAdapter;
+import com.example.administrator.baidumusic.music.recommend.originalmusic.OriginalMusicAdapter;
 import com.example.administrator.baidumusic.music.recommend.slideshow.SlideShowAdapter;
+import com.example.administrator.baidumusic.music.recommend.specialcolumn.SpecialColumnAdapter;
 import com.example.administrator.baidumusic.music.recommend.todaymusic.TodayMusicAdapter;
 import com.example.administrator.baidumusic.tools.CustomPoint;
 import com.example.administrator.baidumusic.tools.SingleVolley;
@@ -36,6 +41,7 @@ public class RecommendAdapter extends RecyclerView.Adapter {
     private SlideShowAdapter slideShowAdapter;
     private CustomPoint point;
     private SlideShowViewHolder slideShowViewHolder;
+    private boolean isInit = true;
 
     public void setRecommendBean(RecommendBean recommendBean) {
         this.recommendBean = recommendBean;
@@ -86,9 +92,8 @@ public class RecommendAdapter extends RecyclerView.Adapter {
                 return holder;
             }
             // 场景电台 scene
-            case 5: {
-                //View view = LayoutInflater.from(context).inflate(R.layout.)
-            }
+            case 5:{}
+
             // 今日推荐歌曲
             case 6: {
                 View view = LayoutInflater.from(context).inflate(R.layout.today_recommed_music,
@@ -96,6 +101,31 @@ public class RecommendAdapter extends RecyclerView.Adapter {
                 holder = new ToadyMusicViewHolder(view);
                 return holder;
             }
+            // 原创音乐
+            case 7: {
+                View view = LayoutInflater.from(context).inflate(R.layout.original_music, parent, false);
+                holder = new OriginalMusicViewHolder(view);
+                return holder;
+            }
+            // 最热MV
+            case 8: {
+                View view = LayoutInflater.from(context).inflate(R.layout.hot_mv, parent, false);
+                holder = new HotMvViewHolder(view);
+                return holder;
+            }
+            // 乐播节目
+            case 9: {
+                View view = LayoutInflater.from(context).inflate(R.layout.music_show, parent, false);
+                holder = new MusicShowViewHolder(view);
+                return holder;
+            }
+            // 专栏
+            case 10: {
+                View view = LayoutInflater.from(context).inflate(R.layout.special_column, parent, false);
+                holder = new SpecialColumnViewHolder(view);
+                return holder;
+            }
+
 
         }
 
@@ -125,22 +155,26 @@ public class RecommendAdapter extends RecyclerView.Adapter {
                 slideShowViewHolder.vpRecommend.setAdapter(slideShowAdapter);
 
                 slideShowAdapter.setStringList(imgurlList);
-                // 点的初始化
-                pointList = new ArrayList<>();
-                for (int i = 0; i < slideShowAdapter.getImageCount(); i++) {
-                    point = new CustomPoint(context);
-                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(0,
-                            ViewGroup.LayoutParams.MATCH_PARENT, 1);
-                    point.setLayoutParams(new LinearLayout.LayoutParams(40,40));
+                if (isInit) {
 
-                    pointList.add(point);
+                    // 点的初始化
+                    pointList = new ArrayList<>();
+                    for (int i = 0; i < slideShowAdapter.getImageCount(); i++) {
+                        point = new CustomPoint(context);
+                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(0,
+                                ViewGroup.LayoutParams.MATCH_PARENT, 1);
+                        point.setLayoutParams(new LinearLayout.LayoutParams(40, 40));
 
-                    slideShowViewHolder.ll.addView(point,layoutParams);
+                        pointList.add(point);
 
+                        slideShowViewHolder.ll.addView(point, layoutParams);
+
+                    }
+                    MyCounter myCounter = new MyCounter(Long.MAX_VALUE, 3000);
+                    myCounter.start();
+                    isInit = false;
                 }
 
-                MyCounter myCounter = new MyCounter(Long.MAX_VALUE, 3000);
-                 myCounter.start();
 
                 // 轮播图的监听
                 slideShowViewHolder.vpRecommend.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -221,6 +255,52 @@ public class RecommendAdapter extends RecyclerView.Adapter {
                 TodayMusicAdapter adapter = new TodayMusicAdapter(context);
 
                 todayViewholer.todayMusic.setAdapter(adapter);
+                adapter.setBean(recommendBean);
+                LinearLayoutManager manager = new LinearLayoutManager(context);
+                todayViewholer.todayMusic.setLayoutManager(manager);
+                break;
+            }
+            // 原创音乐
+            case 7: {
+                OriginalMusicViewHolder originalMusicViewHolder = (OriginalMusicViewHolder) holder;
+                OriginalMusicAdapter adapter = new OriginalMusicAdapter(context);
+                originalMusicViewHolder.rvOriginalMusic.setAdapter(adapter);
+                adapter.setBean(recommendBean);
+                GridLayoutManager manager = new GridLayoutManager(context, 3);
+
+                originalMusicViewHolder.rvOriginalMusic.setLayoutManager(manager);
+                break;
+            }
+            // 最热MV
+            case 8: {
+                HotMvViewHolder hotMvViewHolder = (HotMvViewHolder) holder;
+                HotMvAdapter adatper = new HotMvAdapter();
+                hotMvViewHolder.rvHotMv.setAdapter(adatper);
+                adatper.setBean(recommendBean);
+                GridLayoutManager manager = new GridLayoutManager(context, 3);
+                hotMvViewHolder.rvHotMv.setLayoutManager(manager);
+                break;
+            }
+            // 乐播节目
+            case 9: {
+                MusicShowViewHolder musicHolder = (MusicShowViewHolder) holder;
+                MusicShowAdapter adapter = new MusicShowAdapter();
+                adapter.setBean(recommendBean);
+
+                musicHolder.rvMusicShow.setAdapter(adapter);
+                GridLayoutManager manager = new GridLayoutManager(context, 3);
+                musicHolder.rvMusicShow.setLayoutManager(manager);
+                break;
+
+            }
+            // 专栏
+            case 10: {
+                SpecialColumnViewHolder specialColumnViewHolder = (SpecialColumnViewHolder) holder;
+                SpecialColumnAdapter adapter = new SpecialColumnAdapter();
+                adapter.setBean(recommendBean);
+                specialColumnViewHolder.lvSpecialColumn.setAdapter(adapter);
+
+
             }
 
         }
@@ -231,7 +311,7 @@ public class RecommendAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
 //        return recommendBean.getModule().size();12
-        return recommendBean == null ? 0 : 1;
+        return recommendBean == null ? 0 : 11;
     }
 
     /**
@@ -314,7 +394,7 @@ public class RecommendAdapter extends RecyclerView.Adapter {
      */
     private class ToadyMusicViewHolder extends RecyclerView.ViewHolder {
 
-        private final RecyclerView todayMusic;
+        private  RecyclerView todayMusic;
 
         public ToadyMusicViewHolder(View view) {
             super(view);
@@ -339,6 +419,49 @@ public class RecommendAdapter extends RecyclerView.Adapter {
         @Override
         public void onFinish() {
 
+        }
+    }
+
+    /**
+     * 原创音乐
+     */
+    private class OriginalMusicViewHolder extends RecyclerView.ViewHolder {
+        private RecyclerView rvOriginalMusic;
+
+        public OriginalMusicViewHolder(View view) {
+            super(view);
+            rvOriginalMusic = (RecyclerView) view.findViewById(R.id.rv_original_music);
+
+        }
+    }
+
+    // 最热MV的viewholder
+    private class HotMvViewHolder extends RecyclerView.ViewHolder {
+        private RecyclerView rvHotMv;
+
+        public HotMvViewHolder(View view) {
+            super(view);
+            rvHotMv = (RecyclerView) view.findViewById(R.id.rv_hot_mv);
+        }
+    }
+
+    //乐播节目
+    private class MusicShowViewHolder extends RecyclerView.ViewHolder {
+        private RecyclerView rvMusicShow;
+
+        public MusicShowViewHolder(View view) {
+            super(view);
+            rvMusicShow = (RecyclerView) view.findViewById(R.id.rv_music_show);
+        }
+    }
+
+    // 专栏
+    private class SpecialColumnViewHolder extends RecyclerView.ViewHolder {
+        private ListView lvSpecialColumn;
+
+        public SpecialColumnViewHolder(View view) {
+            super(view);
+            lvSpecialColumn = (ListView) view.findViewById(R.id.lv_specialcolumn);
         }
     }
 }

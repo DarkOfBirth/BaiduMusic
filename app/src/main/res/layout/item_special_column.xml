@@ -1,34 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="wrap_content"
     android:paddingTop="5dp"
     android:paddingBottom="5dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="362dp"
-        android:layout_height="50dp"
+        android:layout_height="35dp"
         android:layout_marginLeft="10dp">
 
         <FrameLayout
             android:layout_width="50dp"
             android:layout_height="50dp">
 
-            <com.example.administrator.baidumusic.music.recommend.todaymusic.CircleImageView
-                android:id="@+id/iv_today_music"
-                app:isCircle="true"
+            <ImageView
+                android:id="@+id/iv_special_column"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@mipmap/ic_launcher" />
-
-            <com.example.administrator.baidumusic.music.recommend.todaymusic.CircleImageView
-                android:id="@+id/iv_today_music_play"
-                android:isScrollContainer="true"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@mipmap/play_1" />
+                android:layout_height="match_parent" />
         </FrameLayout>
 
         <LinearLayout
@@ -39,7 +29,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/title_today_music_play"
+                android:id="@+id/title_special_column"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -48,7 +38,7 @@
                 android:lines="1" />
 
             <TextView
-                android:id="@+id/author_today_music_play"
+                android:id="@+id/desc_special_column"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
@@ -60,10 +50,10 @@
 
         <ImageView
             android:id="@+id/iv_more_today_music"
-            android:layout_marginLeft="20dp"
-            android:layout_width="50dp"
+            android:layout_marginLeft="40dp"
+            android:layout_width="20dp"
             android:layout_gravity="center_vertical"
-            android:layout_height="match_parent"
-            android:src="@mipmap/bt_recsong_more_press"/>
+            android:layout_height="20dp"
+            android:src="@mipmap/icon_to_my_ktv"/>
     </LinearLayout>
 </LinearLayout>

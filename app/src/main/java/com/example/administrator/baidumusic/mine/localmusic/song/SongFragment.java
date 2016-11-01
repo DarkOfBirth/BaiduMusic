@@ -1,6 +1,7 @@
 package com.example.administrator.baidumusic.mine.localmusic.song;
 
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -35,6 +36,7 @@ public class SongFragment extends BaseFragment {
      */
     private PinyinComparator pinyinComparator;
     private TextView total;
+    private View footView;
 
     @Override
     protected int getLayout() {
@@ -68,24 +70,32 @@ public class SongFragment extends BaseFragment {
         sortListView = bindView(R.id.country_lvcountry);
 
         // 给sortListView 添加头尾布局
-        // TODO: 16/11/1 添加头尾布局
-        
+        //  TODO: 16/11/1 添加头尾布局
+
         sortListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 //这里要利用adapter.getItem(position)来获取当前position所对应的对象
-                // 	Toast.makeText(getApplication(), ((SortModel)adapter.getItem(position)).getName(), Toast.LENGTH_SHORT).show();
-                Toast.makeText(MyApp.getmContext(), ((LocalMusicBean)adapter.getItem(position)).getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "position:" + position, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyApp.getmContext(), ((LocalMusicBean)adapter.getItem(position-1)).getName(), Toast.LENGTH_SHORT).show();
 
             }
         });
+        // 头布局
+        View headView = LayoutInflater.from(mContext).inflate(R.layout.head_local_song, null);
+        sortListView.addHeaderView(headView, null, false);
+
 
 
         ArrayList<LocalMusicBean> lists = new ScanMusic().query(MyApp.getmContext());
         LocalMusicBeansList = filledData(lists);
-
+        // 尾布局
+        footView = LayoutInflater.from(mContext).inflate(R.layout.foot_local_song, null);
+        TextView num = (TextView) footView.findViewById(R.id.num_local_music_tv);
+        num.setText("共有" + LocalMusicBeansList.size() + "首歌曲");
+        sortListView.addFooterView(footView,null,false);
         // 根据a-z进行排序源数据
         Collections.sort(LocalMusicBeansList, pinyinComparator);
         adapter = new SortAdapter(MyApp.getmContext(), LocalMusicBeansList);
@@ -119,7 +129,7 @@ public class SongFragment extends BaseFragment {
 
 
         }
-        total.setText(datas.size() + "首歌曲");
+
         return datas;
     }
 
@@ -140,6 +150,10 @@ public class SongFragment extends BaseFragment {
 
         // 根据a-z进行排序
         Collections.sort(filterDateList, pinyinComparator);
+        TextView num = (TextView) footView.findViewById(R.id.num_local_music_tv);
+        num.setText("共有" + filterDateList.size() + "首歌曲");
+
+        sortListView.addFooterView(footView,null,false);
         adapter.updateListView(filterDateList);
     }
 }

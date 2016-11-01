@@ -3,6 +3,11 @@ package com.example.administrator.baidumusic.mine.localmusic.song;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
+
+import com.example.administrator.baidumusic.R;
 
 import java.util.ArrayList;
 
@@ -35,6 +40,7 @@ public class ScanMusic {
             }
             cursor.close();
         }
+
         return arrayList;
 
     }

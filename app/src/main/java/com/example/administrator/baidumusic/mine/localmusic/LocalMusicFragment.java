@@ -4,6 +4,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,14 +17,14 @@ import com.example.administrator.baidumusic.base.BaseFragment;
 import com.example.administrator.baidumusic.mine.localmusic.album.AlbumFragent;
 import com.example.administrator.baidumusic.mine.localmusic.artist.ArtistFragment;
 import com.example.administrator.baidumusic.mine.localmusic.folder.FolderFragment;
-import com.example.administrator.baidumusic.mine.localmusic.music.SongFragment;
+import com.example.administrator.baidumusic.mine.localmusic.song.SongFragment;
 
 import java.util.ArrayList;
 
 /**
  * Created by dllo on 16/10/31.
  */
-public class LocalMusicFragment extends BaseFragment implements View.OnClickListener {
+public class LocalMusicFragment extends BaseFragment implements View.OnClickListener{
     private TextView back;
     private ImageView search;
     private ImageView scan;
@@ -33,6 +35,7 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
     private TabLayout tab;
     private LinearLayout searchBefore;
     private LinearLayout searchAfter;
+    private SongFragment song;
 
     @Override
     protected int getLayout() {
@@ -57,6 +60,40 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
         scan.setOnClickListener(this);
         cancel.setOnClickListener(this);
         sort.setOnClickListener(this);
+        vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                searchAfter.setVisibility(View.INVISIBLE);
+                searchBefore.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        searchbar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                song.search(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
     }
 
@@ -64,7 +101,9 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
     protected void initData() {
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         ArrayList<Fragment> fragments = new ArrayList<>();
-        fragments.add(new SongFragment());
+        song = new SongFragment();
+
+        fragments.add(song);
         fragments.add(new FolderFragment());
         fragments.add(new ArtistFragment());
         fragments.add(new AlbumFragent());
@@ -80,13 +119,27 @@ public class LocalMusicFragment extends BaseFragment implements View.OnClickList
         switch (view.getId()) {
             // 返回
             case R.id.back_local_music:
+                getActivity().onBackPressed();
                 break;
             // 搜索
             case R.id.search_local_music:
+
+                searchBefore.setVisibility(View.INVISIBLE);
+                searchAfter.setVisibility(View.VISIBLE);
                 break;
             // 扫描
             case R.id.scan_local_music:
+
+                break;
+            // 取消
+            case R.id.cancel_local_music:
+                searchAfter.setVisibility(View.INVISIBLE);
+                searchBefore.setVisibility(View.VISIBLE);
+                searchbar.setText(null);
+                song.search(null);
                 break;
         }
     }
+
+
 }

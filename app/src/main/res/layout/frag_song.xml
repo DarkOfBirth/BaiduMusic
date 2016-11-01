@@ -1,7 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:focusable="true"
+              android:focusableInTouchMode="true"
+              android:orientation="vertical">
+
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:id="@+id/country_lvcountry"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:divider="@null"/>
+
+        <TextView
+            android:id="@+id/dialog"
+            android:layout_width="70.0dp"
+            android:layout_height="50.0dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="-100dp"
+
+            android:background="@mipmap/bg_localmusic_fastsearch"
+            android:gravity="center_vertical"
+            android:hint="A"
+
+            android:textAlignment="center"
+            android:textColor="#ffffffff"
+            android:textSize="35.0dip"
+            android:visibility="invisible"
+            />
+
+        <com.example.administrator.baidumusic.mine.localmusic.song.SideBar
+            android:id="@+id/sidrbar"
+            android:layout_width="30.0dip"
+            android:layout_height="match_parent"
+            android:layout_gravity="right|center"/>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/total_lm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="jkjk"/>
 
 </LinearLayout>

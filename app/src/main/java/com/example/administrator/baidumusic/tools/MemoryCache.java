@@ -23,10 +23,12 @@ public class MemoryCache implements ImageLoader.ImageCache{
     @Override
     public Bitmap getBitmap(String url) {
         return mCache.get(url);
+
     }
 
     @Override
     public void putBitmap(String url, Bitmap bitmap) {
+        bitmap.copy(Bitmap.Config.RGB_565,true);
         mCache.put(url,bitmap);
 
     }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+    >
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_weight="1.2"
+        android:drawableLeft="@mipmap/ic_songlist_play"
+        android:paddingTop="8dp"
+        android:text="随机播放全部"
+        android:textAlignment="center"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_weight="1.2"
+        />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_weight="1"
+        android:drawableLeft="@mipmap/bt_mymusic_edit_rename_nor"
+        android:paddingTop="8dp"
+        android:text="  批量管理"
+        android:textSize="16sp"/>
+</LinearLayout>

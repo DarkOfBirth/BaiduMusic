@@ -17,6 +17,11 @@ import com.example.administrator.baidumusic.tools.SingleVolley;
  */
 public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.MyViewHolder> {
     private Context context;
+    private OnItemClickListener mOnItemClickListener;
+
+    public void setmOnItemClickListener(OnItemClickListener mOnItemClickListener) {
+        this.mOnItemClickListener = mOnItemClickListener;
+    }
 
     private MusicListBean listBeen;
     public void setListBeen(MusicListBean listBeen) {
@@ -44,10 +49,16 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.MyVi
     }
 
     @Override
-    public void onBindViewHolder(MusicListAdapter.MyViewHolder myViewHolder, int i) {
+    public void onBindViewHolder(MusicListAdapter.MyViewHolder myViewHolder, final int i) {
         SingleVolley.getInstance().getImage(listBeen.getDiyInfo().get(i).getList_pic_huge(),myViewHolder.imageView);
         myViewHolder.title.setText(listBeen.getDiyInfo().get(i).getTitle());
         myViewHolder.listnum.setText(listBeen.getDiyInfo().get(i).getListen_num() + " ");
+        myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mOnItemClickListener.onItemClick(listBeen.getDiyInfo().get(i).getList_id());
+            }
+        });
     }
 
     @Override
@@ -69,5 +80,8 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.MyVi
             listnum = (TextView) itemView.findViewById(R.id.tv_item_listnum);
             title = (TextView) itemView.findViewById(R.id.tv_title_item_musiclist);
         }
+    }
+    public interface OnItemClickListener{
+        void onItemClick(String song_list);
     }
 }

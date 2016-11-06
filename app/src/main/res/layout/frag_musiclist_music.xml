@@ -56,12 +56,12 @@
         </RelativeLayout>
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
         android:id="@+id/rv_music_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="9">
 
-    </android.support.v7.widget.RecyclerView>
+    </com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView>
 
 </LinearLayout>

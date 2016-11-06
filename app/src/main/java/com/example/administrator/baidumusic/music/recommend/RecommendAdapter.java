@@ -17,7 +17,6 @@ import android.widget.ListView;
 import com.example.administrator.baidumusic.R;
 import com.example.administrator.baidumusic.music.recommend.hotalbum.HotAlbumAdapter;
 import com.example.administrator.baidumusic.music.recommend.hotmv.HotMvAdapter;
-import com.example.administrator.baidumusic.music.recommend.listrecommed.ListRecommedAdapter;
 import com.example.administrator.baidumusic.music.recommend.musicshow.MusicShowAdapter;
 import com.example.administrator.baidumusic.music.recommend.newcd.NewCdAdapter;
 import com.example.administrator.baidumusic.music.recommend.originalmusic.OriginalMusicAdapter;
@@ -92,7 +91,8 @@ public class RecommendAdapter extends RecyclerView.Adapter {
                 return holder;
             }
             // 场景电台 scene
-            case 5:{}
+            case 5: {
+            }
 
             // 今日推荐歌曲
             case 6: {
@@ -219,7 +219,7 @@ public class RecommendAdapter extends RecyclerView.Adapter {
 
                 ListRecommedViewHolder listholder = (ListRecommedViewHolder) holder;
 
-                ListRecommedAdapter adapter = new ListRecommedAdapter(context);
+                com.example.administrator.baidumusic.music.recommend.listrecommed.ListRecommedAdapter adapter = new com.example.administrator.baidumusic.music.recommend.listrecommed.ListRecommedAdapter(context);
                 GridLayoutManager manager = new GridLayoutManager(context, 3);
                 adapter.setBean(recommendBean);
                 listholder.rvListRecommend.setAdapter(adapter);
@@ -310,7 +310,7 @@ public class RecommendAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-//        return recommendBean.getModule().size();12
+        //        return recommendBean.getModule().size();12
         return recommendBean == null ? 0 : 11;
     }
 
@@ -394,7 +394,7 @@ public class RecommendAdapter extends RecyclerView.Adapter {
      */
     private class ToadyMusicViewHolder extends RecyclerView.ViewHolder {
 
-        private  RecyclerView todayMusic;
+        private RecyclerView todayMusic;
 
         public ToadyMusicViewHolder(View view) {
             super(view);

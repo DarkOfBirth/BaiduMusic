@@ -1,13 +1,15 @@
 package com.example.administrator.baidumusic.tools;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 /**
  * Created by paveld on 3/6/14.
  */
 public class FastBlur {
 
-    public static void doBlur(Bitmap sentBitmap, int radius, boolean canReuseInBitmap,BitmapFastBlur bitmapFastBlur) {
+    public static void doBlur(Bitmap sentBitmap, int radius, boolean canReuseInBitmap, BitmapFastBlur bitmapFastBlur) {
+        Log.d("FastBlur", "模糊处理");
 
         // Stack Blur v1.0 from
         // http://www.quasimondo.com/StackBlurForCanvas/StackBlurDemo.html
@@ -43,8 +45,8 @@ public class FastBlur {
         } else {
             bitmap = sentBitmap.copy(sentBitmap.getConfig(), true);
         }
-        bitmap = Bitmap.createScaledBitmap(bitmap,bitmap.getWidth()/2,  bitmap.getHeight() / 2,
-                false);
+        //bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth() / 2, bitmap.getHeight() / 2,
+           //     false);
         if (radius < 1) {
             bitmapFastBlur.transerBitmap(null);
         }
@@ -239,11 +241,11 @@ public class FastBlur {
         }
 
         bitmap.setPixels(pix, 0, w, 0, 0, w, h);
-
+        //bitmap = Bitmap.createScaledBitmap(bitmap,bitmap.getWidth() * 20,  bitmap.getHeight() * 20,false);
         bitmapFastBlur.transerBitmap(bitmap);
     }
 
-public interface BitmapFastBlur{
+    public interface BitmapFastBlur {
         void transerBitmap(Bitmap bitmap);
-        }
+    }
 }

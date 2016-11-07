@@ -19,6 +19,7 @@ public class TopListDetailAdapter extends RecyclerView.Adapter<CommonVH> {
 
     public void setTopListDetailBean(TopListDetailBean topListDetailBean) {
         this.topListDetailBean = topListDetailBean;
+        notifyDataSetChanged();
     }
 
     @Override

@@ -37,15 +37,7 @@
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-                <ImageView
-                    android:id="@+id/center_toplist_detail"
-                    android:layout_width="130dp"
-                    android:layout_height="130dp"
-                    android:layout_centerInParent="true"
-                    android:layout_gravity="center"
-                    android:alpha="0.8"
-                    android:scaleType="fitXY"
-                    android:src="@mipmap/ic_launcher" />
+
 
 
             
@@ -55,8 +47,8 @@
                     android:id="@+id/bg_toplist_detail"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:alpha="0.3"
-                    android:background="#111111"
+
+
                     android:scaleType="fitXY"
                     android:src="@mipmap/ic_launcher"
                     android:layout_alignParentTop="true"

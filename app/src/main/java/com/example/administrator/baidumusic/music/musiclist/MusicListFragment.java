@@ -1,4 +1,4 @@
-﻿package com.example.administrator.baidumusic.music.musiclist;
+package com.example.administrator.baidumusic.music.musiclist;
 
 
 import android.os.Bundle;

@@ -4,14 +4,13 @@ import android.annotation.TargetApi;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -74,7 +73,7 @@ public class MusicListDetailFragment extends BaseFragment implements View.OnClic
         rv.setAdapter(adapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MyApp.getmContext());
         rv.setLayoutManager(layoutManager);
-
+        Log.d("MusicListDetailFragment", "test");
         getData(newUrl);
 
 
@@ -103,31 +102,34 @@ public class MusicListDetailFragment extends BaseFragment implements View.OnClic
         listenNum.setText(response.getListenum());
         SingleVolley.getInstance().getImage(response.getPic_300(), center);
 
-        SingleVolley.getInstance().getImage(response.getPic_300(), new SingleVolley.GetBitmap() {
+        SingleVolley.getInstance().getImage(response.getPic_w700(), new SingleVolley.GetBitmap() {
             @Override
             public void onGetBitmap(Bitmap bitmap) {
-                bg.setImageBitmap(bitmap);
+                // blur(bitmap, bg);
+                //bg.setImageBitmap(bitmap);
+                blur(bitmap, bg);
+                Log.d("MusicListDetailFragment", "bmp:" + bitmap);
 
             }
         });
-        //  Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
-
-        bg.getViewTreeObserver().addOnPreDrawListener(
-                new ViewTreeObserver.OnPreDrawListener() {
-
-                    @Override
-                    public boolean onPreDraw() {
-
-                        bg.getViewTreeObserver().removeOnPreDrawListener(this);
-                        bg.buildDrawingCache();
-
-                        Bitmap bmp = bg.getDrawingCache();
-
-                        blur(bmp, bg);
-
-                        return true;
-                    }
-                });
+        //Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+        //bg.setImageBitmap(bitmap);
+//        bg.getViewTreeObserver().addOnPreDrawListener(
+//                new ViewTreeObserver.OnPreDrawListener() {
+//
+//                    @Override
+//                    public boolean onPreDraw() {
+//
+//                        bg.getViewTreeObserver().removeOnPreDrawListener(this);
+//                        bg.buildDrawingCache();
+//
+//                        Bitmap bmp = bg.getDrawingCache();
+//                        Log.d("MusicListDetailFragment", "bmp:" + bmp);
+//
+//
+//                        return true;
+//                    }
+//                });
 
 
     }
@@ -146,7 +148,7 @@ public class MusicListDetailFragment extends BaseFragment implements View.OnClic
     private void blur(Bitmap bkg, final View view) {
         long startMs = System.currentTimeMillis();
         float scaleFactor = 8;
-        final float radius = 20;
+        final float radius = 15;
 
         final Bitmap overlay = Bitmap.createBitmap(
                 (int) (view.getMeasuredWidth() / scaleFactor),
@@ -163,25 +165,31 @@ public class MusicListDetailFragment extends BaseFragment implements View.OnClic
         new Thread(new Runnable() {
             @Override
             public void run() {
-                mHandler.post(new Runnable() {
+                FastBlur.doBlur(overlay, (int) radius,true, new FastBlur.BitmapFastBlur() {
                     @Override
-                    public void run() {
-
-                        FastBlur.doBlur(overlay, (int) radius, true, new FastBlur.BitmapFastBlur() {
+                    public void transerBitmap(final Bitmap bitmap) {
+                        mHandler.post(new Runnable() {
                             @Override
-                            public void transerBitmap(Bitmap overlay) {
-
+                            public void run() {
                                 if (view instanceof ImageView) {
+
                                     ImageView imageView = (ImageView) view;
-//
-                                    imageView.setImageBitmap(overlay);
+                                    Log.d("Sysout", "bitmap.getWidth():" + bitmap.getWidth());
+                                  imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                                    Log.d("Sysout", "imageView.getWidth():" + imageView.getWidth());
+                                   // bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, false);
+                                   // imageView.setImageBitmap(bitmap);
+                                    // imageView.setImageBitmap(bitmap);
+
+                                      bg.setImageBitmap(bitmap);
                                 } else {
-                                    view.setBackground(new BitmapDrawable(getResources(), overlay));
+                                    //  view.setBackground(new BitmapDrawable(getResources(), overlay));
                                 }
                             }
                         });
                     }
                 });
+
 
             }
         }).start();

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<ImageView
+    android:id="@+id/other_songlist"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:alpha="0.4"
+    android:background="#292626"
+    android:layout_weight="1"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7"
+
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:background="#dfdfdf"
+            android:layout_height="50dp">
+            <ImageView
+                android:id="@+id/circle_mode_song_list"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="match_parent"
+                android:textSize="24sp"
+                android:gravity="center"
+                android:textColor="@color/colorTextBlack"
+                android:text="正在播放列表"/>
+            <TextView
+                android:id="@+id/clear_all_song_list"
+                android:layout_width="0dp"
+                android:layout_weight="1.5"
+                android:clickable="true"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:contextClickable="true"
+                android:layout_height="match_parent"
+                android:text="全部清空"/>
+        </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_songlist"
+            android:background="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@mipmap/ic_launcher" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="5.64"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title_item_songlist"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:lines="1"
+            android:gravity="center_vertical"
+            android:textSize="18sp"
+            android:textColor="@color/colorTextBlack"
+            android:text="看见符合加分符合" />
+
+        <TextView
+            android:id="@+id/author_item_songlist"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:lines="1"
+            android:gravity="center_vertical"
+            android:textSize="14sp"
+
+            android:text="看见符合加分符合"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/delete_item_songlist"
+        android:padding="8dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:src="@mipmap/bt_notificationbar_close"
+        >
+
+    </ImageView>
+</LinearLayout>

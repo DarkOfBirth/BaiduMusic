@@ -2,8 +2,6 @@ package com.example.administrator.baidumusic.music.musiclist.musiclistdetail;
 
 import android.annotation.TargetApi;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
@@ -20,10 +18,15 @@ import com.example.administrator.baidumusic.R;
 import com.example.administrator.baidumusic.base.BaseFragment;
 import com.example.administrator.baidumusic.base.MyApp;
 import com.example.administrator.baidumusic.databean.MusicListDetailBean;
+import com.example.administrator.baidumusic.messageevent.ClearEvent;
 import com.example.administrator.baidumusic.tools.AppValues;
 import com.example.administrator.baidumusic.tools.FastBlur;
 import com.example.administrator.baidumusic.tools.GsonRequest;
 import com.example.administrator.baidumusic.tools.SingleVolley;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Created by Administrator on 2016/11/5.
@@ -45,6 +48,12 @@ public class MusicListDetailFragment extends BaseFragment implements View.OnClic
         }
     };
     private MusicListDetailAdapter adapter;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
 
     @Override
     protected int getLayout() {
@@ -79,6 +88,12 @@ public class MusicListDetailFragment extends BaseFragment implements View.OnClic
 
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(ClearEvent event) {
+
+       adapter.setLoad(event.isFlag());
+    }
+
     private void getData(String newUrl) {
         GsonRequest<MusicListDetailBean> request = new GsonRequest<MusicListDetailBean>(MusicListDetailBean.class, newUrl, new Response.Listener<MusicListDetailBean>() {
             @Override
@@ -105,31 +120,14 @@ public class MusicListDetailFragment extends BaseFragment implements View.OnClic
         SingleVolley.getInstance().getImage(response.getPic_w700(), new SingleVolley.GetBitmap() {
             @Override
             public void onGetBitmap(Bitmap bitmap) {
-                // blur(bitmap, bg);
-                //bg.setImageBitmap(bitmap);
+
                 blur(bitmap, bg);
+
                 Log.d("MusicListDetailFragment", "bmp:" + bitmap);
 
             }
         });
-        //Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
-        //bg.setImageBitmap(bitmap);
-//        bg.getViewTreeObserver().addOnPreDrawListener(
-//                new ViewTreeObserver.OnPreDrawListener() {
-//
-//                    @Override
-//                    public boolean onPreDraw() {
-//
-//                        bg.getViewTreeObserver().removeOnPreDrawListener(this);
-//                        bg.buildDrawingCache();
-//
-//                        Bitmap bmp = bg.getDrawingCache();
-//                        Log.d("MusicListDetailFragment", "bmp:" + bmp);
-//
-//
-//                        return true;
-//                    }
-//                });
+        ;
 
 
     }
@@ -145,27 +143,15 @@ public class MusicListDetailFragment extends BaseFragment implements View.OnClic
 
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    private void blur(Bitmap bkg, final View view) {
-        long startMs = System.currentTimeMillis();
-        float scaleFactor = 8;
-        final float radius = 15;
+    private void blur(final Bitmap bkg, final View view) {
 
-        final Bitmap overlay = Bitmap.createBitmap(
-                (int) (view.getMeasuredWidth() / scaleFactor),
-                (int) (view.getMeasuredHeight() / scaleFactor),
-                Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(overlay);
-        canvas.translate(-view.getLeft() / scaleFactor, -view.getTop()
-                / scaleFactor);
-        canvas.scale(1 / scaleFactor, 1 / scaleFactor);
-        Paint paint = new Paint();
-        paint.setFlags(Paint.FILTER_BITMAP_FLAG);
-        canvas.drawBitmap(bkg, 0, 0, paint);
+        final float radius = 20;
+        final Bitmap overlay = bkg.copy(Bitmap.Config.ARGB_8888, false);
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                FastBlur.doBlur(overlay, (int) radius,true, new FastBlur.BitmapFastBlur() {
+                FastBlur.doBlur(overlay, (int) radius, true, new FastBlur.BitmapFastBlur() {
                     @Override
                     public void transerBitmap(final Bitmap bitmap) {
                         mHandler.post(new Runnable() {
@@ -175,15 +161,11 @@ public class MusicListDetailFragment extends BaseFragment implements View.OnClic
 
                                     ImageView imageView = (ImageView) view;
                                     Log.d("Sysout", "bitmap.getWidth():" + bitmap.getWidth());
-                                  imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                                     Log.d("Sysout", "imageView.getWidth():" + imageView.getWidth());
-                                   // bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, false);
-                                   // imageView.setImageBitmap(bitmap);
-                                    // imageView.setImageBitmap(bitmap);
 
-                                      bg.setImageBitmap(bitmap);
+                                    imageView.setImageBitmap(bitmap);
                                 } else {
-                                    //  view.setBackground(new BitmapDrawable(getResources(), overlay));
                                 }
                             }
                         });
@@ -193,6 +175,12 @@ public class MusicListDetailFragment extends BaseFragment implements View.OnClic
 
             }
         }).start();
-        System.out.println(System.currentTimeMillis() - startMs + "ms");
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 }

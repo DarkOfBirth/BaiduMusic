@@ -43,7 +43,7 @@ public class SingleVolley {
         imageLoader.get(url, ImageLoader.getImageListener(imageView,
                 R.mipmap.ic_mymusic_picture_down_2,R.mipmap.ic_launcher));
     }
-    //
+    // 获取bitmap
     public void getImage(String url,GetBitmap getBitmap){
        imageLoader.get(url,new BitmapLoader(getBitmap));
 

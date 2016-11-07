@@ -2,19 +2,14 @@ package com.example.administrator.baidumusic.tools;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.os.Message;
-import android.util.Log;
 
 import com.example.administrator.baidumusic.base.MyApp;
 import com.litesuits.orm.LiteOrm;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 
 /**
@@ -49,46 +44,51 @@ public class DBTools {
      * 数据插入
      *
      */
-    public <T> void insertPerson(T t){
+    public <T> void insertMusciInfo(T t){
+
         mLiteOrm.insert(t);
     }
 
-    public <T> void insertPerson(List<T> ts)
+    public <T> void insertMusciInfo(List<T> ts)
     {
         mLiteOrm.insert(ts);
     }
 
-    public<T>  void queryPerson( Class<T> tClass,final OnQueryPersonValue<T> mOnqueryPersonValue){
+    // 删除
+    public <T> void deleteMusicInfo(Class<T> tClass){
+        mLiteOrm.deleteAll(tClass);
+    }
+    public<T>  void queryMusicInfo( Class<T> tClass,final OnQueryMusicInfo<T> mOnQueryMusicInfo){
 
-        mThreadPool.execute(new QueryRunnable(mOnqueryPersonValue, tClass));
+        mThreadPool.execute(new QueryRunnable(mOnQueryMusicInfo, tClass));
     }
     // 一个传值的接口
 
-    public interface  OnQueryPersonValue<T>{
+    public interface  OnQueryMusicInfo<T>{
        void OnQuery(ArrayList<T> query);
     }
 
     private class QueryRunnable<T> implements Runnable{
-        private OnQueryPersonValue onQueryPersonValue;
+        private OnQueryMusicInfo onQueryMusicInfo;
         private  Class mClass ;
 
 
-        public QueryRunnable(OnQueryPersonValue mOnqueryPersonValue, Class<T> tClass) {
-            this.onQueryPersonValue = mOnqueryPersonValue;
+        public QueryRunnable(OnQueryMusicInfo mOnQueryMusicInfo, Class<T> tClass) {
+            this.onQueryMusicInfo = mOnQueryMusicInfo;
             this.mClass = tClass;
         }
 
         @Override
         public void run() {
            ArrayList<T> query = mLiteOrm.query(mClass);
-            mHandler.post(new CallBacks(onQueryPersonValue,query));
+            mHandler.post(new CallBacks(onQueryMusicInfo,query));
         }
     }
 // 将值发回main
   private  class CallBacks<T> implements Runnable{
-      private OnQueryPersonValue onQueryPersonValue;
+      private OnQueryMusicInfo onQueryPersonValue;
       private ArrayList<T> beanArrayList;
-      public CallBacks(OnQueryPersonValue onQueryPersonValue,
+      public CallBacks(OnQueryMusicInfo onQueryPersonValue,
                        List<T> beanArrayList) {
           this.onQueryPersonValue = onQueryPersonValue;
           this.beanArrayList = (ArrayList<T>) beanArrayList;

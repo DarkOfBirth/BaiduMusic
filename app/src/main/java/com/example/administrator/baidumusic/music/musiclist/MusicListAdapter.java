@@ -10,7 +10,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.administrator.baidumusic.R;
+import com.example.administrator.baidumusic.messageevent.ClearEvent;
+import com.example.administrator.baidumusic.messageevent.SongListEvent;
+import com.example.administrator.baidumusic.tools.DBTools;
 import com.example.administrator.baidumusic.tools.SingleVolley;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by dllo on 16/10/25.
@@ -57,6 +62,8 @@ public class MusicListAdapter extends RecyclerView.Adapter<MusicListAdapter.MyVi
             @Override
             public void onClick(View view) {
                 mOnItemClickListener.onItemClick(listBeen.getDiyInfo().get(i).getList_id());
+                DBTools.getInstance().deleteMusicInfo(SongListEvent.class);
+                EventBus.getDefault().post(new ClearEvent(false));
             }
         });
     }

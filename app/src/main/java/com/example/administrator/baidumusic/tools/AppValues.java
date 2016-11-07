@@ -18,6 +18,8 @@ public final class AppValues {
     public static String VIDEO = "http://tingapi.ting.baidu.com/v1/restserver/ting?from=android&version=5.9.0.0&channel=xiaomi&operator=0&provider=11%2C12&method=baidu.ting.mv.searchMV&format=json&order=1&page" + "_num=1&page_size=20&query=%E5%85%A8%E9%83%A8";
     public static String RECOMMEND="http://tingapi.ting.baidu.com/v1/restserver/ting?from=android&version=5.9.0.0&channel=xiaomi&operator=0&method=baidu.ting.plaza.index&cuid=BB4CB967DAEF05B2F1B359FA3A90CA88";
     public static String MUSIC_LIST_LAST="http://tingapi.ting.baidu.com/v1/restserver/ting?from=android&version=5.9.0.0&channel=xiaomi&operator=0&method=baidu.ting.ugcdiy.getChanneldiy&param=kQr4Ajwx3qpKDoRbLTGWOwSe7SOYdQZiJrWR2GlQvPXxdYVwGSvpE8rERYmUzbsRDaciKgTlXBYl7c71wRsyilrU2hBZw5hja%2BU4BM7xYQFVqCF2ZykoOdIGqFkkuWBn&timestamp=1477490592&sign=de2f8026497500c3545d67002a147192";
+    public static final String PLAY_SONG_HEAD = "http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu.ting.song.play&songid=";
+    public static final String PLAY_SONG_END = "&_=1413017198449";
 
 
 

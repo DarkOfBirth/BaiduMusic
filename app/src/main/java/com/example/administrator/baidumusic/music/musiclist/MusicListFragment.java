@@ -1,7 +1,9 @@
-package com.example.administrator.baidumusic.music.musiclist;
+﻿package com.example.administrator.baidumusic.music.musiclist;
+
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -69,6 +71,23 @@ public class MusicListFragment extends BaseFragment implements View.OnClickListe
                 bundle.putString("list_id", song_list);
                 fragment.setArguments(bundle);
 
+       upData(AppValues.MUSIC_LIST);
+
+        musicList.setOnPullLoadMoreListener(new PullLoadMoreRecyclerView.PullLoadMoreListener() {
+            @Override
+            public void onRefresh() {
+                musicList.setPullRefreshEnable(false);
+            }
+
+            @Override
+            public void onLoadMore() {
+                Toast.makeText(mContext, "上拉加载", Toast.LENGTH_SHORT).show();
+                musicList.setPullLoadMoreCompleted();
+            }
+        } );
+
+
+
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.add(R.id.main_fl, fragment);
                 transaction.addToBackStack(null);
@@ -77,6 +96,7 @@ public class MusicListFragment extends BaseFragment implements View.OnClickListe
         });
 
     }
+
 
 
     /**

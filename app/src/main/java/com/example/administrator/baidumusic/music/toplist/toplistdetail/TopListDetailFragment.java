@@ -55,11 +55,11 @@ public class TopListDetailFragment extends BaseFragment {
 
 
     private void getData(String newUrl) {
-        GsonRequest<TopListDetailBean> request = new GsonRequest<TopListDetailBean>(TopListDetailBean.class, newUrl, new Response.Listener<MusicListDetailBean>() {
-            @Override
-            public void onResponse(MusicListDetailBean response) {
-                setViewData(response);
-                adapter.setMusicListDetailBean(response);
+        GsonRequest<TopListDetailBean> request = new GsonRequest<TopListDetailBean>(TopListDetailBean.class, newUrl, new Response.Listener<TopListDetailBean>() {
+          @Override
+            public void onResponse(TopListDetailBean response) {
+
+
             }
         }, new Response.ErrorListener() {
             @Override

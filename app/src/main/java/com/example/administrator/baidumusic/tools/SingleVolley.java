@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.widget.ImageView;
 
 import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.example.administrator.baidumusic.R;
@@ -43,10 +44,34 @@ public class SingleVolley {
                 R.mipmap.ic_mymusic_picture_down_2,R.mipmap.ic_launcher));
     }
     //
-    public Bitmap getImage(String url){
-        MemoryCache cache = new MemoryCache();
-        return   cache.getBitmap(url);
+    public void getImage(String url,GetBitmap getBitmap){
+       imageLoader.get(url,new BitmapLoader(getBitmap));
 
+    }
+
+    public class BitmapLoader implements ImageLoader.ImageListener{
+        private GetBitmap getBitmap;
+
+        public BitmapLoader(GetBitmap getBitmap) {
+            this.getBitmap = getBitmap;
+        }
+
+        @Override
+        public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+            Bitmap bitmap = response.getBitmap();
+            if(bitmap != null) {
+                getBitmap.onGetBitmap(bitmap);
+            }
+        }
+
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            getBitmap.onGetBitmap(null);
+        }
+    }
+
+    public interface GetBitmap{
+        void onGetBitmap(Bitmap bitmap);
     }
 }
 

@@ -2,7 +2,6 @@ package com.example.administrator.baidumusic.music.musiclist.musiclistdetail;
 
 import android.annotation.TargetApi;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
@@ -62,7 +61,7 @@ public class MusicListDetailFragment extends BaseFragment implements View.OnClic
         num = bindView(R.id.num_musiclist_detail);
         listenNum = bindView(R.id.listen_num_musiclist_detail);
         view = bindView(R.id.content_musiclist_detail);
-        rv = bindView(view,R.id.rv_musiclist_detail);
+        rv = bindView(view, R.id.rv_musiclist_detail);
         back.setOnClickListener(this);
 
     }
@@ -73,7 +72,7 @@ public class MusicListDetailFragment extends BaseFragment implements View.OnClic
         String newUrl = AppValues.MUSIC_LIST_DETAIL_BEFORE + list_id + AppValues.MUSIC_LIST_DETAIL_AFTER;
         adapter = new MusicListDetailAdapter();
         rv.setAdapter(adapter);
-       RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MyApp.getmContext());
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MyApp.getmContext());
         rv.setLayoutManager(layoutManager);
 
         getData(newUrl);
@@ -104,9 +103,14 @@ public class MusicListDetailFragment extends BaseFragment implements View.OnClic
         listenNum.setText(response.getListenum());
         SingleVolley.getInstance().getImage(response.getPic_300(), center);
 
-        //TODO 获取背景图片, 不会
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
-        bg.setImageBitmap(bitmap);
+        SingleVolley.getInstance().getImage(response.getPic_300(), new SingleVolley.GetBitmap() {
+            @Override
+            public void onGetBitmap(Bitmap bitmap) {
+                bg.setImageBitmap(bitmap);
+
+            }
+        });
+        //  Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
 
         bg.getViewTreeObserver().addOnPreDrawListener(
                 new ViewTreeObserver.OnPreDrawListener() {

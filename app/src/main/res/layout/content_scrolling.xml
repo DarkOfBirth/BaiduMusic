@@ -9,7 +9,7 @@
     tools:showIn="@layout/frag_musiclist_detail">
 
     <android.support.v7.widget.RecyclerView
-
+        android:id="@+id/rv_musiclist_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

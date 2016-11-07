@@ -11,7 +11,7 @@
 
 
     <include layout="@layout/content_scrolling"
-        android:id="@+id/content_musiclist_detail"/>
+        android:id="@+id/content_toplist_detail"/>
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
@@ -38,7 +38,7 @@
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
                 <ImageView
-                    android:id="@+id/center_musiclist_detail"
+                    android:id="@+id/center_toplist_detail"
                     android:layout_width="130dp"
                     android:layout_height="130dp"
                     android:layout_centerInParent="true"
@@ -48,22 +48,11 @@
                     android:src="@mipmap/ic_launcher" />
 
 
-                <TextView
-                    android:id="@+id/listen_num_musiclist_detail"
-                    android:layout_width="80dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentRight="true"
-                    android:drawableLeft="@mipmap/ic_lebo_listen"
-                    android:textColor="@color/colorTextBlack"
-                    android:gravity="center_vertical"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginTop="180dp"
-                    android:text="1552"
-                    android:textSize="16sp" />
+            
 
                 <ImageView
 
-                    android:id="@+id/bg_musiclist_detail"
+                    android:id="@+id/bg_toplist_detail"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:alpha="0.3"
@@ -95,14 +84,14 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/back_musiclist_detail"
+                        android:id="@+id/back_toplist_detail"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:clickable="true"
                         android:src="@mipmap/back" />
 
                     <TextView
-                        android:id="@+id/title_musiclist_detail"
+                        android:id="@+id/title_toplist_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="20dp"
@@ -126,7 +115,7 @@
             android:background="#ffffff">
 
             <TextView
-                android:id="@+id/playall_musiclist_detail"
+                android:id="@+id/playall_toplist_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
@@ -138,7 +127,7 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/num_musiclist_detail"
+                android:id="@+id/num_toplist_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
@@ -151,7 +140,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/download_musiclist_detail"
+                android:id="@+id/download_toplist_detail"
                 android:layout_width="80dp"
                 android:layout_height="match_parent"
                 android:clickable="true"

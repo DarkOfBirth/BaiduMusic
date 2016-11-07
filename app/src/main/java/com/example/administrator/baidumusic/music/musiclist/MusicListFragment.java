@@ -1,5 +1,6 @@
 package com.example.administrator.baidumusic.music.musiclist;
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
@@ -64,6 +65,9 @@ public class MusicListFragment extends BaseFragment implements View.OnClickListe
             @Override
             public void onItemClick(String song_list) {
                     MusicListDetailFragment fragment = new MusicListDetailFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("list_id", song_list);
+                fragment.setArguments(bundle);
 
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.add(R.id.main_fl, fragment);

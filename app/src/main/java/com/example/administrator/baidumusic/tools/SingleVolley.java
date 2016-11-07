@@ -1,5 +1,6 @@
 package com.example.administrator.baidumusic.tools;
 
+import android.graphics.Bitmap;
 import android.widget.ImageView;
 
 import com.android.volley.RequestQueue;
@@ -31,12 +32,21 @@ public class SingleVolley {
         return singleVolley;
     }
 
+
     public RequestQueue getRequestQueue(){
         return requestQueue;
     }
 
 // 图片
     public void getImage(String url, ImageView imageView){
-        imageLoader.get(url, ImageLoader.getImageListener(imageView, R.mipmap.ic_mymusic_picture_down_2,R.mipmap.ic_launcher));
+        imageLoader.get(url, ImageLoader.getImageListener(imageView,
+                R.mipmap.ic_mymusic_picture_down_2,R.mipmap.ic_launcher));
+    }
+    //
+    public Bitmap getImage(String url){
+        MemoryCache cache = new MemoryCache();
+        return   cache.getBitmap(url);
+
     }
 }
+

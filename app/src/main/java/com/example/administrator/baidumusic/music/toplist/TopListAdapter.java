@@ -1,6 +1,7 @@
 package com.example.administrator.baidumusic.music.toplist;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +62,14 @@ public class TopListAdapter extends BaseAdapter{
         viewholder.third.setText(bean.getContent().get(i).getContent().get(2).getTitle()
                 +"-" + bean.getContent().get(i).getContent().get(2).getAuthor());
         return view;
+    }
+
+    public Bundle getData(int i) {
+        Bundle bundle = new Bundle();
+        bundle.putString("type", bean.getContent().get(i).getType() + "");
+        bundle.putString("name", bean.getContent().get(i).getName());
+        bundle.putString("pic", bean.getContent().get(i).getPic_s192());
+        return bundle;
     }
 
     class ViewHolder {

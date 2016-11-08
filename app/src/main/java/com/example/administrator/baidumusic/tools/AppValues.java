@@ -22,5 +22,11 @@ public final class AppValues {
     public static final String PLAY_SONG_END = "&_=1413017198449";
 
 
+    public static final int PLAY_STATE = 1;
+    public static final int PAUSE_STATE = 0;
+    public static final int STOP_STATE = -1;
+
+
+
 
 }

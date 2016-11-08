@@ -9,6 +9,7 @@ import com.example.administrator.baidumusic.R;
 import com.example.administrator.baidumusic.databean.MusicListDetailBean;
 import com.example.administrator.baidumusic.messageevent.PlayMusicEvent;
 import com.example.administrator.baidumusic.messageevent.SongListEvent;
+import com.example.administrator.baidumusic.tools.AppValues;
 import com.example.administrator.baidumusic.tools.CommonVH;
 import com.example.administrator.baidumusic.tools.DBTools;
 
@@ -61,37 +62,51 @@ public class MusicListDetailAdapter extends RecyclerView.Adapter<CommonVH> {
 
                 event.setSongId(musicListDetailBean.getContent().get(position).getSong_id());
                 EventBus.getDefault().post(event);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
+                modifyPlayState(musicListDetailBean.getContent().get(position), AppValues.PLAY_STATE);
+                // 如果未添加, 添加列表
+                if (!isLoad) {
 
-                        loadData();
-                    }
-                }).start();
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            loadData(position);
+
+                        }
+                    }).start();
+                }
 
             }
         });
 
     }
 
-    private void loadData() {
+    private void loadData(int position) {
         if (isLoad) {
             return;
         }
-
+        // 先清空
+        DBTools.getInstance().deleteAllMusicInfo(SongListEvent.class);
         for (int i = 0; i < musicListDetailBean.getContent().size(); i++) {
             SongListEvent songListEvent = new SongListEvent();
             Log.d("MusicListDetailAdapter1", "插入");
             songListEvent.setSongId(musicListDetailBean.getContent().get(i).getSong_id());
             songListEvent.setTitle(musicListDetailBean.getContent().get(i).getTitle());
             songListEvent.setAuthor(musicListDetailBean.getContent().get(i).getAuthor());
-
+            songListEvent.setState(-1);
             DBTools.getInstance().insertMusciInfo(songListEvent);
         }
+        DBTools.getInstance().modifyMusicInfo(SongListEvent.class,
+                musicListDetailBean.getContent().get(position).getSong_id(),
+                "state",AppValues.PLAY_STATE);
         isLoad = true;
 
     }
-
+    // 修改播放状态n
+    public void modifyPlayState(MusicListDetailBean.ContentBean contentBean,int state){
+        // 先将其他的状态都复位
+        DBTools.getInstance().modifyMusicInfo(SongListEvent.class,"","state",AppValues.STOP_STATE);
+        DBTools.getInstance().modifyMusicInfo(SongListEvent.class,contentBean.getSong_id(),"state",state);
+    }
     @Override
     public int getItemCount() {
         int count = 0;

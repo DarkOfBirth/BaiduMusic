@@ -12,10 +12,11 @@ public class SongListEvent {
     // 指定自增，每个对象需要有一个主键
     @PrimaryKey(AssignType.AUTO_INCREMENT)
     private int id;
-    String songId;
-    String title;
-    String author;
-    String pic;
+    private String songId;
+    private String title;
+    private String author;
+    private String pic;
+    private int state;
 
     public String getPic() {
         return pic;
@@ -25,7 +26,7 @@ public class SongListEvent {
         this.pic = pic;
     }
 
-    String state;
+
 
     public String getSongId() {
         return songId;
@@ -44,11 +45,11 @@ public class SongListEvent {
         this.author = author;
     }
 
-    public String getState() {
+    public int getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(int state) {
         this.state = state;
     }
 

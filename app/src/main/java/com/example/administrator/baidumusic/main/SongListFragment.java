@@ -54,6 +54,13 @@ public class SongListFragment extends BaseFragment implements View.OnClickListen
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(MyApp.getmContext());
         recyclerView.setLayoutManager(layoutManager);
         getData();
+
+        adapter.setmOnSongListClick(new SongListAdatper.OnSongListClick() {
+            @Override
+            public void onDelete(String songId) {
+                DBTools.getInstance().deleteOneMusicInfo(SongListEvent.class,songId);
+            }
+        });
     }
 
     @Override
@@ -83,7 +90,7 @@ public class SongListFragment extends BaseFragment implements View.OnClickListen
 
                 break;
             case R.id.clear_all_song_list:
-                DBTools.getInstance().deleteMusicInfo(SongListEvent.class);
+                DBTools.getInstance().deleteAllMusicInfo(SongListEvent.class);
                 getData();
                 EventBus.getDefault().post(new ClearEvent(false));
                 break;

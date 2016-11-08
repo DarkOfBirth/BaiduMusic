@@ -7,9 +7,23 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.example.administrator.baidumusic.databean.MusicItemBean;
+import com.example.administrator.baidumusic.messageevent.PlayMusicEvent;
+import com.example.administrator.baidumusic.messageevent.PlayerDataEvent;
+import com.example.administrator.baidumusic.messageevent.SongListEvent;
+import com.example.administrator.baidumusic.tools.AppValues;
+import com.example.administrator.baidumusic.tools.DBTools;
+import com.example.administrator.baidumusic.tools.GsonRequest;
+import com.example.administrator.baidumusic.tools.SingleVolley;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,6 +33,14 @@ import java.util.List;
 public class MusicService extends Service {
 
     private MediaPlayer mediaPlayer;
+    private String path = "";
+    private String lastSongId;
+
+    @Override
+    public void onStart(Intent intent, int startId) {
+        super.onStart(intent, startId);
+        EventBus.getDefault().register(this);
+    }
 
     @Override
     public void onCreate() {
@@ -30,12 +52,12 @@ public class MusicService extends Service {
             @Override
 
             public void onCompletion(MediaPlayer mp) {
+                Log.d("MusicService", "完毕");
+                mp.stop();
+                mp.reset();
+             playNextInner();
 
-                // TODO Auto-generated method stub
 
-                //current++;
-
-               // prepareAndPlay(current);
 
             }
 
@@ -107,21 +129,82 @@ public class MusicService extends Service {
     }
 
     public void addPlayListInner(MusicItemBean item) throws IOException {
-        String path = item.getBitrate().getShow_link();
+
+
+        path = item.getBitrate().getShow_link();
         if (mediaPlayer.isPlaying()) {
+
             mediaPlayer.stop();
             mediaPlayer.reset();
         }
-        Log.d("MusicService", path);
+
         mediaPlayer.setDataSource(path);
         mediaPlayer.prepare();
         mediaPlayer.start();
-        Log.d("MusicService", "mediaPlayer.isPlaying():" + mediaPlayer.isPlaying());
+
 
 
     }
 
     public void playNextInner() {
+        DBTools.getInstance().queryMusicInfo(SongListEvent.class, new DBTools.OnQueryMusicInfo<SongListEvent>() {
+            @Override
+            public void OnQuery(ArrayList<SongListEvent> query) {
+                Log.d("MainActivity", "query.size():" + query.size());
+                for(int i = 0; i < query.size(); i ++){
+                    int state = query.get(i).getState();
+                    Log.d("MainActivity", "state:" + state);
+                    if(AppValues.PLAY_STATE == state){
+                        Log.d("MainActivity", "找到");
+                        DBTools.getInstance().modifyMusicInfo(SongListEvent.class,
+                                query.get(i).getSongId(),"state",AppValues.STOP_STATE);
+                        DBTools.getInstance().modifyMusicInfo(SongListEvent.class,
+                                query.get((i + 1) % query.size()).getSongId(),"state",AppValues.PLAY_STATE);
+                        String musicUrl = AppValues.PLAY_SONG_HEAD +  query.get((i + 1) % query.size()).getSongId();
+                        getMusicInfo(musicUrl);
+                    }
+                }
+
+            }
+        });
+
+
+    }
+
+
+    // 传值
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(PlayMusicEvent event) {
+        //Log.d("MainActivity", event.getSongId());
+        if (lastSongId == event.getSongId()){
+            return;
+        }
+        lastSongId = event.getSongId();
+        String musicUrl = AppValues.PLAY_SONG_HEAD +  event.getSongId();
+        getMusicInfo(musicUrl);
+
+        /* Do something */}
+    // 得到音乐的详细信息
+    private void getMusicInfo(String musicUrl) {
+        GsonRequest<MusicItemBean> request = new GsonRequest<MusicItemBean>(MusicItemBean.class, musicUrl, new Response.Listener<MusicItemBean>() {
+            @Override
+            public void onResponse(MusicItemBean response) {
+              //  addPlayList(response);
+                try {
+                    addPlayListInner(response);
+                    EventBus.getDefault().post(new PlayerDataEvent(response));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                // SetBottomPlayerData(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        SingleVolley.getInstance().getRequestQueue().add(request);
     }
 
     public void playInner() {
@@ -164,5 +247,9 @@ public class MusicService extends Service {
         return mBinder;
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+              android:layout_height="60dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="60dp">
 
         <LinearLayout
             android:id="@+id/ll_music_bottom"
@@ -19,7 +18,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/view_loading" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -34,7 +33,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
-                    android:background="#ca2525"
+
                     android:orientation="vertical"
 
                     >
@@ -43,7 +42,7 @@
                         android:id="@+id/tv_music_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Until you" />
+                        android:text="百度音乐 听到极致" />
 
                     <TextView
                         android:id="@+id/tv_music_singer"

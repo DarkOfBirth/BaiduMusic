@@ -73,5 +73,7 @@ public class SingleVolley {
     public interface GetBitmap{
         void onGetBitmap(Bitmap bitmap);
     }
+
+
 }
 

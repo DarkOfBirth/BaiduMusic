@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -36,15 +37,17 @@ public class MusicService extends Service {
     private String path = "";
     private String lastSongId;
 
+
+
     @Override
-    public void onStart(Intent intent, int startId) {
-        super.onStart(intent, startId);
-        EventBus.getDefault().register(this);
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
+        EventBus.getDefault().register(this);
         mediaPlayer = new MediaPlayer();
 
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -208,14 +211,15 @@ public class MusicService extends Service {
     }
 
     public void playInner() {
-
+        Toast.makeText(this, "恢复播放", Toast.LENGTH_SHORT).show();
+        mediaPlayer.start();
     }
 
     public void playPreInner() {
     }
 
     public void pauseInner() {
-
+        mediaPlayer.pause();
     }
 
     public void seekToInner(int pos) {

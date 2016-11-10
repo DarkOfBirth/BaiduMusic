@@ -8,7 +8,9 @@ import com.example.administrator.baidumusic.R;
 import com.example.administrator.baidumusic.base.MyApp;
 import com.example.administrator.baidumusic.messageevent.PlayMusicEvent;
 import com.example.administrator.baidumusic.messageevent.SongListEvent;
+import com.example.administrator.baidumusic.tools.AppValues;
 import com.example.administrator.baidumusic.tools.CommonVH;
+import com.example.administrator.baidumusic.tools.DBTools;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -63,7 +65,11 @@ public class SongListAdatper extends RecyclerView.Adapter<CommonVH> {
             public void onClick(View view) {
                 PlayMusicEvent playMusicEvent = new PlayMusicEvent();
                 playMusicEvent.setSongId(arrayList.get(position).getSongId());
+
+                DBTools.getInstance().modifyMusicInfo(SongListEvent.class, "", "state", AppValues.STOP_STATE);
+                DBTools.getInstance().modifyMusicInfo(SongListEvent.class, arrayList.get(position).getSongId(), "state", AppValues.PLAY_STATE);
                 EventBus.getDefault().post(playMusicEvent);
+
             }
         });
 

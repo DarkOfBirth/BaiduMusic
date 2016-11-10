@@ -9,6 +9,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -20,8 +21,11 @@ import com.example.administrator.baidumusic.R;
 import com.example.administrator.baidumusic.base.BaseActivity;
 import com.example.administrator.baidumusic.databean.MusicItemBean;
 import com.example.administrator.baidumusic.messageevent.PlayerDataEvent;
+import com.example.administrator.baidumusic.messageevent.SongListEvent;
 import com.example.administrator.baidumusic.player.MusicService;
-import com.example.administrator.baidumusic.player.PlayerActivity;
+import com.example.administrator.baidumusic.player.PlayerFragment;
+import com.example.administrator.baidumusic.tools.AppValues;
+import com.example.administrator.baidumusic.tools.DBTools;
 import com.example.administrator.baidumusic.tools.SingleVolley;
 
 import org.greenrobot.eventbus.EventBus;
@@ -34,11 +38,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private View bottomView;
     private ImageButton songList; // 右下角的列表按钮
     private ImageButton next;// 下一首
+    private ImageButton play;
     private TextView title, author;
     private ImageView pic;
     private boolean flag; // 歌曲列表是否弹出
     private LinearLayout playerLayout; // 面板, 点击弹出整个播放器详情
+    private boolean isPlay = false;
     Intent intent;
+    private MusicItemBean musicItemBean = null;
     private MusicService.MusicServiceIBinder mMusicService;
 
     private ServiceConnection mServiceConnection = new ServiceConnection() {
@@ -56,31 +63,58 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         }
     };
+    private String songId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         intent = new Intent(this, MusicService.class);
-        startService(intent);
-        bindService(intent, mServiceConnection, BIND_AUTO_CREATE);
+        if (mMusicService == null) {
+
+            startService(intent);
+            bindService(intent, mServiceConnection, BIND_AUTO_CREATE);
+        }
         EventBus.getDefault().register(this);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // 执行
+        Log.d("back", "onResume");
+        bottomView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("back", "onStart");
+    }
 
     @Override
     protected int getLayout() {
         return R.layout.activity_main;
     }
 
+    // 显示bottom
+    public void showBottom() {
+        bottomView.setVisibility(View.VISIBLE);
+    }
+
     @Override
     protected void initViews() {
+
         bottomView = bindView(R.id.player_bottom);
         songList = bindView(bottomView, R.id.ib_music_list);
         pic = bindView(bottomView, R.id.iv_music_pic);
         title = bindView(bottomView, R.id.tv_music_name);
         author = bindView(bottomView, R.id.tv_music_singer);
         next = bindView(bottomView, R.id.ib_music_next);
+        play = bindView(bottomView, R.id.ib_music_play);
         playerLayout = bindView(bottomView, R.id.ll_music_bottom);
+
+
+        play.setOnClickListener(this);
         songList.setOnClickListener(this);
         next.setOnClickListener(this);
         playerLayout.setOnClickListener(this);
@@ -110,7 +144,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(PlayerDataEvent event) {
         SetBottomPlayerData(event.getMusicItemBean());
-
+        musicItemBean = event.getMusicItemBean();
+        isPlay = true;
+        songId = musicItemBean.getSonginfo().getSong_id();
         /* Do something */
     }
 
@@ -125,10 +161,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         String picUrl = response.getSonginfo().getPic_small();
         title.setText(titleString);
         author.setText(authorString);
+        play.setBackgroundResource(R.mipmap.bt_minibar_play_normal);
         SingleVolley.getInstance().getImage(picUrl, pic);
     }
-
-
 
 
     @Override
@@ -157,17 +192,57 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 Toast.makeText(this, "下一首", Toast.LENGTH_SHORT).show();
                 mMusicService.playNext();
                 break;
+            // 点击播放器
             case R.id.ll_music_bottom:
-                Intent intent = new Intent(this, PlayerActivity.class);
-                startActivity(intent);
+                bottomView.setVisibility(View.INVISIBLE);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("bundle", musicItemBean);
+                PlayerFragment playerFragment = new PlayerFragment();
+                playerFragment.setArguments(bundle);
+                jumpFragment(playerFragment);
+                break;
+            // 播放暂停按钮
+            case R.id.ib_music_play:
+
+
+                playOrPause();
+                // pause
+
+
+
                 break;
 
+        }
+    }
+
+    public void playOrPause() {
+        if (isPlay) {
+            Toast.makeText(this, "pause", Toast.LENGTH_SHORT).show();
+            DBTools.getInstance().modifyMusicInfo(SongListEvent.class, songId, "state", AppValues.PAUSE_STATE);
+            play.setBackgroundResource(R.mipmap.bt_minibar_pause_normal);
+            mMusicService.pause();
+            isPlay = !isPlay;
+
+        } else {
+            // play
+            DBTools.getInstance().modifyMusicInfo(SongListEvent.class, songId, "state", AppValues.PLAY_STATE);
+            play.setBackgroundResource(R.mipmap.bt_minibar_play_normal);
+            mMusicService.play();
+            isPlay = !isPlay;
         }
     }
 
 
     public <T extends Fragment> void jumpFragment(T t) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.main_fl, t);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    public <T extends Fragment> void jumpFragment(T t, int enterAnim, int exitAnim) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(enterAnim, exitAnim);
         transaction.add(R.id.main_fl, t);
         transaction.addToBackStack(null);
         transaction.commit();

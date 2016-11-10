@@ -2,7 +2,48 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ff0000"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="140dp">
+
+        <ImageView
+
+            android:id="@+id/image_leftplayer"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="30dp"
+            android:src="@mipmap/ic_launcher" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/author_left_player"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:hint="歌手:"
+                android:textSize="20sp">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/album_left_player"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:hint="专辑:"
+                android:textSize="20sp">
+
+            </TextView>
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

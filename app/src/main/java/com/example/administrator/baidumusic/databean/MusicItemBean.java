@@ -1,9 +1,11 @@
 package com.example.administrator.baidumusic.databean;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2016/11/7.
  */
-public class MusicItemBean {
+public class MusicItemBean implements Serializable{
 
 
     /**
@@ -89,7 +91,9 @@ public class MusicItemBean {
         this.bitrate = bitrate;
     }
 
-    public static class SonginfoBean {
+
+
+    public static class SonginfoBean implements Serializable{
         private int special_type;
         private String pic_huge;
         private String resource_type;
@@ -398,7 +402,7 @@ public class MusicItemBean {
         }
     }
 
-    public static class BitrateBean {
+    public static class BitrateBean implements Serializable{
         private String show_link;
         private int free;
         private int song_file_id;

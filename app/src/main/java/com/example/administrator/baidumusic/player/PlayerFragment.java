@@ -36,6 +36,8 @@ public class PlayerFragment extends BaseFragment implements View.OnClickListener
     private List<Fragment> fragmentList;
     private ImageView list_player;
     private ImageView play;
+    private ImageView playNext;
+    private ImageView playPrevious;
     private SeekBar seekBar;
     private TextView current, total;
 
@@ -66,8 +68,12 @@ public class PlayerFragment extends BaseFragment implements View.OnClickListener
         seekBar = bindView(R.id.seekBar_player);
         current = bindView(R.id.current_time_player);
         total = bindView(R.id.total_time_player);
+        playNext = bindView(R.id.next_player);
+        playPrevious = bindView(R.id.previous_player);
 
         play.setOnClickListener(this);
+        playNext.setOnClickListener(this);
+        playPrevious.setOnClickListener(this);
         list_player.setOnClickListener(this);
         back.setOnClickListener(this);
 
@@ -129,11 +135,13 @@ public class PlayerFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            // 返回
             case R.id.back_player:
 
                 getActivity().onBackPressed();
 
                 break;
+            // 列表
             case R.id.list_player:
 
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -142,10 +150,17 @@ public class PlayerFragment extends BaseFragment implements View.OnClickListener
                 transaction.addToBackStack(null);
                 transaction.commit();
                 break;
+            // 暂停
             case R.id.play_pause_player:
 
                 ((MainActivity) getActivity()).playOrPause();
 
+                break;
+            case R.id.next_player:
+                ((MainActivity) getActivity()).playNext();
+                break;
+            case R.id.previous_player:
+                ((MainActivity) getActivity()).playPre();
                 break;
         }
     }

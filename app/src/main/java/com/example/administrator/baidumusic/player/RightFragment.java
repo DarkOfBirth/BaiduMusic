@@ -7,6 +7,7 @@ import com.example.administrator.baidumusic.R;
 import com.example.administrator.baidumusic.base.BaseFragment;
 import com.example.administrator.baidumusic.messageevent.LrcEvent;
 import com.example.administrator.baidumusic.messageevent.MusicProgressEvent;
+import com.example.administrator.baidumusic.messageevent.ProgerssHandEvent;
 import com.example.administrator.baidumusic.player.LrcShow.DefaultLrcBuilder;
 import com.example.administrator.baidumusic.player.LrcShow.ILrcBuilder;
 import com.example.administrator.baidumusic.player.LrcShow.ILrcViewListener;
@@ -44,14 +45,16 @@ public class RightFragment extends BaseFragment {
     @Override
     protected void initView() {
         mLrcView = bindView(R.id.lrcView);
-        Log.d("RightFragment", "mLrcView:initView" + mLrcView);
+
 
 
 
         mLrcView.setListener(new ILrcViewListener() {
             //当歌词被用户上下拖动的时候回调该方法,从高亮的那一句歌词开始播放
             public void onLrcSeeked(int newPosition, LrcRow row) {
-
+                Log.d("RightFragment", "newPosition:" + newPosition);
+                Log.d("RightFragment", row.time + "");
+                EventBus.getDefault().post(new ProgerssHandEvent((int) row.time));
             }
         });
     }

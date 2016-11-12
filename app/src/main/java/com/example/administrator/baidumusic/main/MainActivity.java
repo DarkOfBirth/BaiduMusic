@@ -81,6 +81,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d("MainActivity", "onRestart");
+        // 服务仍然存在
+        Log.d("MainActivity", "mMusicService:" + mMusicService);
+        mMusicService.rePost();
+
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         // 执行
@@ -193,9 +203,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             // 下一首歌曲
             case R.id.ib_music_next:
                 Toast.makeText(this, "下一首", Toast.LENGTH_SHORT).show();
-                Log.d("MainActivity111", "下一首");
-//                mMusicService.playNext();
-                mMusicService.playNext();
+                playNext();
+
                 break;
             // 点击播放器
             case R.id.ll_music_bottom:
@@ -219,7 +228,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         }
     }
+    public void playPre(){
+        mMusicService.playPre();
+    }
 
+    /**
+     * 下一首
+     */
+    public void playNext(){
+        mMusicService.playNext();
+    }
+    /**
+     * 播放暂停功能
+     */
     public void playOrPause() {
         if (isPlay) {
             Toast.makeText(this, "pause", Toast.LENGTH_SHORT).show();
@@ -237,7 +258,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
-
+    /**
+     * 跳转fragment 的通用方法
+     * @param t
+     * @param <T>
+     */
     public <T extends Fragment> void jumpFragment(T t) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.main_fl, t);

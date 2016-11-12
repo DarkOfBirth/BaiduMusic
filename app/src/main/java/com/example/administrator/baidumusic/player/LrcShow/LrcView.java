@@ -73,16 +73,16 @@ public class LrcView extends View implements ILrcView {
     /**
      * 拖动歌词时，展示当前高亮歌词的时间的字体大小最小值
      **/
-    private int mMinSeekLineTextSize = 16;
+    private int mMinSeekLineTextSize = 22;
     /**
      * 拖动歌词时，展示当前高亮歌词的时间的字体大小最大值
      **/
-    private int mMaxSeekLineTextSize = 18;
+    private int mMaxSeekLineTextSize = 25;
 
     /**
      * 歌词字体大小默认值
      **/
-    private int mLrcFontSize = 23;    // font size of lrc
+    private int mLrcFontSize = 25;    // font size of lrc
     /**
      * 歌词字体大小最小值
      **/

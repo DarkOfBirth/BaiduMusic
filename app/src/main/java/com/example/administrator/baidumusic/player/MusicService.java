@@ -44,11 +44,14 @@ public class MusicService extends Service {
     private int duration;
     private int currentPosition;
     private String lrcStr;
-
+    private MusicItemBean rePostData;
 
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
+
+
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -116,7 +119,9 @@ public class MusicService extends Service {
             playNextInner();
 
         }
-
+        public void rePost(){
+            rePostDataInner();
+        }
         public void playPre() {
             playPreInner();
         }
@@ -152,6 +157,10 @@ public class MusicService extends Service {
 
     }
 
+    private void rePostDataInner() {
+        EventBus.getDefault().post(new PlayerDataEvent(rePostData));
+    }
+
     //真正实现功能的方法
     public void addPlayListInner(List<MusicItemBean> items) {
 
@@ -171,11 +180,6 @@ public class MusicService extends Service {
 
         mediaPlayer.setDataSource(path);
         mediaPlayer.prepareAsync();
-
-
-
-
-
 
     }
 
@@ -260,9 +264,9 @@ public class MusicService extends Service {
               //  addPlayList(response);
                 try {
                     addPlayListInner(response);
-                    Log.d("MusicService", response.getSonginfo().getLrclink());
+                   // Log.d("MusicService", response.getSonginfo().getLrclink());
                     getLrcInfo(response.getSonginfo().getLrclink());
-
+                  rePostData =  response;
                     EventBus.getDefault().post(new PlayerDataEvent(response));
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -308,6 +312,29 @@ public class MusicService extends Service {
     }
 
     public void playPreInner() {
+
+        Log.d("MusicService111", "count" + this);
+        DBTools.getInstance().queryMusicInfo(SongListEvent.class, new DBTools.OnQueryMusicInfo<SongListEvent>() {
+            @Override
+            public void OnQuery(ArrayList<SongListEvent> query) {
+                Log.d("MusicService111", "query.size():" + query.size());
+                for(int i = 0; i < query.size(); i ++){
+                    int state = query.get(i).getState();
+                    Log.d("MusicService111", "state:" + state);
+                    if(AppValues.PLAY_STATE == state){
+                        Log.d("MusicService111", "找到");
+                        DBTools.getInstance().modifyMusicInfo(SongListEvent.class,
+                                query.get(i).getSongId(),"state",AppValues.STOP_STATE);
+                        DBTools.getInstance().modifyMusicInfo(SongListEvent.class,
+                                query.get((i - 1) % query.size()).getSongId(),"state",AppValues.PLAY_STATE);
+                        String musicUrl = AppValues.PLAY_SONG_HEAD +  query.get((i - 1 + query.size()) % query.size()).getSongId();
+                        getMusicInfo(musicUrl);
+                        break;
+                    }
+                }
+
+            }
+        });
     }
 
     public void pauseInner() {

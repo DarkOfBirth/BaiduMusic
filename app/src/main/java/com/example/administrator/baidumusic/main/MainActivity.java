@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
@@ -46,6 +47,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private boolean isPlay = false;
     Intent intent;
     private MusicItemBean musicItemBean = null;
+    private MusicService mService;
     private MusicService.MusicServiceIBinder mMusicService;
 
     private ServiceConnection mServiceConnection = new ServiceConnection() {
@@ -55,6 +57,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
             //绑定成功后，取得MusicSercice提供的接口
             mMusicService = (MusicService.MusicServiceIBinder) service;
+            mService = ((MusicService.MusicServiceIBinder) service).getService();
 
         }
 
@@ -124,11 +127,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void initData() {
         Fragment mainFragment = new MainFragment();
-        jumpFragment(mainFragment);
-//        FragmentManager manager = getSupportFragmentManager();
-//        transaction = manager.beginTransaction();
-//        transaction.add(R.id.main_fl,mainFragment);
-//        transaction.commit();
+//        jumpFragment(mainFragment);
+        FragmentManager manager = getSupportFragmentManager();
+        transaction = manager.beginTransaction();
+       transaction.add(R.id.main_fl,mainFragment);
+        transaction.commit();
 
     }
 
@@ -190,6 +193,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             // 下一首歌曲
             case R.id.ib_music_next:
                 Toast.makeText(this, "下一首", Toast.LENGTH_SHORT).show();
+                Log.d("MainActivity111", "下一首");
+//                mMusicService.playNext();
                 mMusicService.playNext();
                 break;
             // 点击播放器

@@ -2,6 +2,7 @@ package com.example.administrator.baidumusic.player;
 
 import android.app.Service;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
@@ -11,12 +12,16 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.administrator.baidumusic.databean.MusicItemBean;
+import com.example.administrator.baidumusic.messageevent.LrcEvent;
+import com.example.administrator.baidumusic.messageevent.MusicProgressEvent;
 import com.example.administrator.baidumusic.messageevent.PlayMusicEvent;
 import com.example.administrator.baidumusic.messageevent.PlayerDataEvent;
+import com.example.administrator.baidumusic.messageevent.ProgerssHandEvent;
 import com.example.administrator.baidumusic.messageevent.SongListEvent;
 import com.example.administrator.baidumusic.tools.AppValues;
 import com.example.administrator.baidumusic.tools.DBTools;
 import com.example.administrator.baidumusic.tools.GsonRequest;
+import com.example.administrator.baidumusic.tools.LrcRequest;
 import com.example.administrator.baidumusic.tools.SingleVolley;
 
 import org.greenrobot.eventbus.EventBus;
@@ -36,6 +41,9 @@ public class MusicService extends Service {
     private MediaPlayer mediaPlayer;
     private String path = "";
     private String lastSongId;
+    private int duration;
+    private int currentPosition;
+    private String lrcStr;
 
 
 
@@ -49,22 +57,36 @@ public class MusicService extends Service {
         super.onCreate();
         EventBus.getDefault().register(this);
         mediaPlayer = new MediaPlayer();
-
+        // 歌曲播放完毕的监听器
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 
             @Override
 
             public void onCompletion(MediaPlayer mp) {
-                Log.d("MusicService", "完毕");
-                mp.stop();
-                mp.reset();
+                Log.d("playPause", "完毕");
+              //  mp.stop();
+              //  mp.reset();
              playNextInner();
-
-
-
             }
 
         });
+        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mediaPlayer) {
+
+                mediaPlayer.start();
+            }
+        });
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                sendProgress();
+            }
+        }).start();
+
     }
 
     public class MusicServiceIBinder extends Binder {
@@ -79,6 +101,10 @@ public class MusicService extends Service {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+
+        public MusicService getService(){
+            return MusicService.this;
         }
 
         public void play() {
@@ -138,33 +164,58 @@ public class MusicService extends Service {
         if (mediaPlayer.isPlaying()) {
 
             mediaPlayer.stop();
-            mediaPlayer.reset();
         }
+        mediaPlayer.reset();
+        Log.d("path22", path);
+         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
         mediaPlayer.setDataSource(path);
-        mediaPlayer.prepare();
-        mediaPlayer.start();
+        mediaPlayer.prepareAsync();
+
+
+
 
 
 
     }
 
+    // 发送进度
+    public void sendProgress()  {
+        while (true){
+
+            while (mediaPlayer.isPlaying()) {
+
+                duration = mediaPlayer.getDuration();
+                currentPosition = mediaPlayer.getCurrentPosition();
+
+                EventBus.getDefault().post(new MusicProgressEvent(AppValues.PROGRESS_AUTO,duration, currentPosition));
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    // 下一曲播放
     public void playNextInner() {
+        Log.d("MusicService111", "count" + this);
         DBTools.getInstance().queryMusicInfo(SongListEvent.class, new DBTools.OnQueryMusicInfo<SongListEvent>() {
             @Override
             public void OnQuery(ArrayList<SongListEvent> query) {
-                Log.d("MainActivity", "query.size():" + query.size());
+                Log.d("MusicService111", "query.size():" + query.size());
                 for(int i = 0; i < query.size(); i ++){
                     int state = query.get(i).getState();
-                    Log.d("MainActivity", "state:" + state);
+                    Log.d("MusicService111", "state:" + state);
                     if(AppValues.PLAY_STATE == state){
-                        Log.d("MainActivity", "找到");
+                        Log.d("MusicService111", "找到");
                         DBTools.getInstance().modifyMusicInfo(SongListEvent.class,
                                 query.get(i).getSongId(),"state",AppValues.STOP_STATE);
                         DBTools.getInstance().modifyMusicInfo(SongListEvent.class,
                                 query.get((i + 1) % query.size()).getSongId(),"state",AppValues.PLAY_STATE);
                         String musicUrl = AppValues.PLAY_SONG_HEAD +  query.get((i + 1) % query.size()).getSongId();
                         getMusicInfo(musicUrl);
+                        break;
                     }
                 }
 
@@ -173,6 +224,20 @@ public class MusicService extends Service {
 
 
     }
+
+    // 接受进度
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(ProgerssHandEvent event) {
+
+
+            // 手动拖动进度条
+            Log.d("MusicService", "手动");
+            int position = event.getPosition();
+          //  pauseInner();
+            mediaPlayer.seekTo(position);
+          //  playInner();
+
+       }
 
 
     // 传值
@@ -195,6 +260,9 @@ public class MusicService extends Service {
               //  addPlayList(response);
                 try {
                     addPlayListInner(response);
+                    Log.d("MusicService", response.getSonginfo().getLrclink());
+                    getLrcInfo(response.getSonginfo().getLrclink());
+
                     EventBus.getDefault().post(new PlayerDataEvent(response));
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -208,6 +276,30 @@ public class MusicService extends Service {
             }
         });
         SingleVolley.getInstance().getRequestQueue().add(request);
+    }
+
+    /**
+     * 获取歌词的信息
+     * @param lrcUrl 歌词的URL
+     */
+    private void getLrcInfo(final String lrcUrl) {
+        Log.d("Sysout-url", lrcUrl);
+        LrcRequest lrcRequest = new LrcRequest(lrcUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("Sysout-response", response);
+
+                lrcStr = response;
+                EventBus.getDefault().postSticky(new LrcEvent(lrcStr));
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Sysout-error", "" + error.getMessage());
+            }
+        });
+
+        SingleVolley.getInstance().getRequestQueue().add(lrcRequest);
     }
 
     public void playInner() {

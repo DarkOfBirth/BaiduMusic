@@ -26,6 +26,12 @@ public final class AppValues {
     public static final int PAUSE_STATE = 0;
     public static final int STOP_STATE = -1;
 
+    // PROGRESS_AUTO 自动改变播放进度
+    // PROGRESS_HAND 手动改变播放进度
+    public static final int PROGRESS_AUTO = 0;
+    public static final int PROGRESS_HAND = 1;
+
+
 
 
 

@@ -97,7 +97,7 @@
                     android:layout_width="45dp"
                     android:layout_height="40dp"
                     android:gravity="center_vertical"
-                    android:hint="00:00"
+                   android:text="00:00"
                     android:paddingLeft="5dp"
 
                     android:textColor="@color/colorTextBlack" />
@@ -118,7 +118,7 @@
                     android:layout_width="45dp"
                     android:layout_height="40dp"
                     android:gravity="center_vertical"
-                    android:hint="00:00"
+                    android:text="00:00"
                     android:textColor="@color/colorTextBlack" />
 
             </LinearLayout>

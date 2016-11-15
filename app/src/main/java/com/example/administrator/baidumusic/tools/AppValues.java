@@ -20,8 +20,8 @@ public final class AppValues {
     public static String MUSIC_LIST_LAST="http://tingapi.ting.baidu.com/v1/restserver/ting?from=android&version=5.9.0.0&channel=xiaomi&operator=0&method=baidu.ting.ugcdiy.getChanneldiy&param=kQr4Ajwx3qpKDoRbLTGWOwSe7SOYdQZiJrWR2GlQvPXxdYVwGSvpE8rERYmUzbsRDaciKgTlXBYl7c71wRsyilrU2hBZw5hja%2BU4BM7xYQFVqCF2ZykoOdIGqFkkuWBn&timestamp=1477490592&sign=de2f8026497500c3545d67002a147192";
     public static final String PLAY_SONG_HEAD = "http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu.ting.song.play&songid=";
     public static final String PLAY_SONG_END = "&_=1413017198449";
-
-
+    public static final String MV_HEAD = "http://tingapi.ting.baidu.com/v1/restserver/ting?from=android&version=5.9.0.0&channel=xiaomi&operator=0&provider=11%2C12&method=baidu.ting.mv.playMV&format=json&mv_id=";
+    public static final String MV_END = "&song_id=&definition=0";
     public static final int PLAY_STATE = 1;
     public static final int PAUSE_STATE = 0;
     public static final int STOP_STATE = -1;
@@ -30,6 +30,12 @@ public final class AppValues {
     // PROGRESS_HAND 手动改变播放进度
     public static final int PROGRESS_AUTO = 0;
     public static final int PROGRESS_HAND = 1;
+
+    public static final int SINGLE_CIRCLE = 0;
+    public static final int LIST_CIRCLE = 1;
+    public static final int LIST_PLAY = 2;
+    public static final int RANDOM_PLAY = 3;
+
 
 
 

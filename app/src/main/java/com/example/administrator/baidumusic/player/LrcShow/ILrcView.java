@@ -1,4 +1,4 @@
-package com.example.administrator.baidumusic.player.LrcShow;
+package com.example.administrator.baidumusic.player.lrcshow;
 
 /**
  * Created by Administrator on 2016/11/11.

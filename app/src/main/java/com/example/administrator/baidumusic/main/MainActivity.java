@@ -20,9 +20,10 @@ import android.widget.Toast;
 
 import com.example.administrator.baidumusic.R;
 import com.example.administrator.baidumusic.base.BaseActivity;
+import com.example.administrator.baidumusic.base.MyApp;
 import com.example.administrator.baidumusic.databean.MusicItemBean;
 import com.example.administrator.baidumusic.messageevent.PlayerDataEvent;
-import com.example.administrator.baidumusic.messageevent.SongListEvent;
+import com.example.administrator.baidumusic.database.SongListEvent;
 import com.example.administrator.baidumusic.player.MusicService;
 import com.example.administrator.baidumusic.player.PlayerFragment;
 import com.example.administrator.baidumusic.tools.AppValues;
@@ -57,8 +58,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
             //绑定成功后，取得MusicSercice提供的接口
             mMusicService = (MusicService.MusicServiceIBinder) service;
-            mService = ((MusicService.MusicServiceIBinder) service).getService();
-
+           // mService = ((MusicService.MusicServiceIBinder) service).getService();
+            mMusicService.rePost();
         }
 
         @Override
@@ -71,6 +72,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        ((MyApp)getApplication()).setInstance(this);
         intent = new Intent(this, MusicService.class);
         if (mMusicService == null) {
 
@@ -83,10 +87,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.d("MainActivity", "onRestart");
-        // 服务仍然存在
-        Log.d("MainActivity", "mMusicService:" + mMusicService);
-        mMusicService.rePost();
+
+
 
     }
 
@@ -102,6 +104,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onStart() {
         super.onStart();
         Log.d("back", "onStart");
+        Log.d("MainActivity", "mMusicService:" + mMusicService);
+        if (mMusicService != null) {
+            mMusicService.rePost();
+
+        }
     }
 
     @Override
@@ -112,6 +119,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     // 显示bottom
     public void showBottom() {
         bottomView.setVisibility(View.VISIBLE);
+    }
+    public void unShowBottom(){
+        bottomView.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -140,7 +150,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //        jumpFragment(mainFragment);
         FragmentManager manager = getSupportFragmentManager();
         transaction = manager.beginTransaction();
-       transaction.add(R.id.main_fl,mainFragment);
+        transaction.add(R.id.main_fl, mainFragment);
         transaction.commit();
 
     }
@@ -156,7 +166,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(PlayerDataEvent event) {
-        SetBottomPlayerData(event.getMusicItemBean());
+        setBottomPlayerData(event.getMusicItemBean());
         musicItemBean = event.getMusicItemBean();
         isPlay = true;
         songId = musicItemBean.getSonginfo().getSong_id();
@@ -168,13 +178,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      *
      * @param response
      */
-    private void SetBottomPlayerData(MusicItemBean response) {
+    private void setBottomPlayerData(MusicItemBean response) {
+        Log.d("MainActivity", "response:" + response);
+
         String titleString = response.getSonginfo().getTitle();
         String authorString = response.getSonginfo().getAuthor();
         String picUrl = response.getSonginfo().getPic_small();
+        play.setBackgroundResource(R.mipmap.bt_minibar_pause_normal);
         title.setText(titleString);
         author.setText(authorString);
-        play.setBackgroundResource(R.mipmap.bt_minibar_play_normal);
+
         SingleVolley.getInstance().getImage(picUrl, pic);
     }
 
@@ -223,21 +236,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 // pause
 
 
-
                 break;
 
         }
     }
-    public void playPre(){
+
+    public void playPre() {
         mMusicService.playPre();
     }
 
     /**
      * 下一首
      */
-    public void playNext(){
+    public void playNext() {
         mMusicService.playNext();
     }
+
     /**
      * 播放暂停功能
      */
@@ -245,14 +259,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         if (isPlay) {
             Toast.makeText(this, "pause", Toast.LENGTH_SHORT).show();
             DBTools.getInstance().modifyMusicInfo(SongListEvent.class, songId, "state", AppValues.PAUSE_STATE);
-            play.setBackgroundResource(R.mipmap.bt_minibar_pause_normal);
+            play.setBackgroundResource(R.mipmap.bt_minibar_play_normal);
             mMusicService.pause();
             isPlay = !isPlay;
 
         } else {
             // play
             DBTools.getInstance().modifyMusicInfo(SongListEvent.class, songId, "state", AppValues.PLAY_STATE);
-            play.setBackgroundResource(R.mipmap.bt_minibar_play_normal);
+            play.setBackgroundResource(R.mipmap.bt_minibar_pause_normal);
             mMusicService.play();
             isPlay = !isPlay;
         }
@@ -260,6 +274,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     /**
      * 跳转fragment 的通用方法
+     *
      * @param t
      * @param <T>
      */
@@ -281,4 +296,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void setFlag(boolean flag) {
         this.flag = flag;
     }
+
+    public void modeChange(){
+        mMusicService.modeChange();
+    }
+
+
 }

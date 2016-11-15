@@ -11,7 +11,7 @@ import com.example.administrator.baidumusic.R;
 import com.example.administrator.baidumusic.base.BaseFragment;
 import com.example.administrator.baidumusic.base.MyApp;
 import com.example.administrator.baidumusic.messageevent.ClearEvent;
-import com.example.administrator.baidumusic.messageevent.SongListEvent;
+import com.example.administrator.baidumusic.database.SongListEvent;
 import com.example.administrator.baidumusic.tools.DBTools;
 
 import org.greenrobot.eventbus.EventBus;

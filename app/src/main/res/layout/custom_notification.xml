@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/notify_ll"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/pic_custom_notify"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_launcher" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="#ffffff"
+        android:orientation="vertical"
+        android:paddingLeft="13dp"
+        android:paddingTop="3dp">
+
+        <TextView
+            android:id="@+id/title_custom_notify"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:hint="百度音乐"
+            android:gravity="center_vertical"
+            android:lines="1"
+            android:textColor="@color/colorTextBlack"
+
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/author_custom_notify"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:hint="李克勤"
+            android:gravity="center_vertical"
+            android:textColor="@color/colorTextGray"
+            android:lines="1"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1.2">
+
+        <ImageView
+            android:id="@+id/play_or_pause_custom_notify"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:padding="15dp"
+            android:src="@mipmap/bt_notificationbar_pause"/>
+
+        <ImageView
+            android:id="@+id/next_custom_notify"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="15dp"
+            android:clickable="true"
+            android:src="@mipmap/bt_notificationbar_next"/>
+
+        <ImageView
+            android:id="@+id/delete_custom_notify"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="20dp"
+            android:clickable="true"
+            android:src="@mipmap/bt_notificationbar_close"/>
+    </LinearLayout>
+</LinearLayout>

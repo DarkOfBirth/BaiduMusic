@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import com.example.administrator.baidumusic.R;
 import com.example.administrator.baidumusic.databean.MusicListDetailBean;
 import com.example.administrator.baidumusic.messageevent.PlayMusicEvent;
-import com.example.administrator.baidumusic.messageevent.SongListEvent;
+import com.example.administrator.baidumusic.database.SongListEvent;
 import com.example.administrator.baidumusic.tools.AppValues;
 import com.example.administrator.baidumusic.tools.CommonVH;
 import com.example.administrator.baidumusic.tools.DBTools;

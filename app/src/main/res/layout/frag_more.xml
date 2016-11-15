@@ -1,44 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-    android:background="#ffffff">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
 
     <LinearLayout
+        android:id="@+id/login"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
         android:gravity="center_vertical"
         android:padding="10dp">
-        
+
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:src="@mipmap/img_option_setting_user"
-            />
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    >
-    
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="立即登录"/>
+            android:src="@mipmap/img_option_setting_user" />
 
-        <TextView
-            android:layout_marginTop="5dp"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="登录后,自动为您同步歌曲"
-            android:textColor="#978d8d"/>
-</LinearLayout>
+            android:orientation="vertical">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="立即登录\n登录后,自动为您同步歌曲"
+                android:id="@+id/user_more" />
+
+
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -49,12 +45,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:src="@mipmap/icon_to_my_ktv"
-                />
+                android:src="@mipmap/icon_to_my_ktv" />
         </RelativeLayout>
 
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -66,14 +62,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:src="@mipmap/icon_option_setting_my_message"
-            />
+            android:src="@mipmap/icon_option_setting_my_message" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="我的消息"/>
+            android:text="我的消息" />
 
 
         <RelativeLayout
@@ -85,12 +80,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:src="@mipmap/icon_to_my_ktv"
-                />
+                android:src="@mipmap/icon_to_my_ktv" />
         </RelativeLayout>
 
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -102,15 +97,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:src="@mipmap/ic_setting_vip"
-            />
+            android:src="@mipmap/ic_setting_vip" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="成为白金VIP"/>
-
+            android:text="成为白金VIP" />
 
 
         <RelativeLayout
@@ -122,12 +115,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:src="@mipmap/icon_to_my_ktv"
-                />
+                android:src="@mipmap/icon_to_my_ktv" />
         </RelativeLayout>
 
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -139,15 +132,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:src="@mipmap/icon_option_setting_setting"
-            />
+            android:src="@mipmap/icon_option_setting_setting" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="设置"/>
-
+            android:text="设置" />
 
 
         <RelativeLayout
@@ -159,12 +150,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:src="@mipmap/icon_to_my_ktv"
-                />
+                android:src="@mipmap/icon_to_my_ktv" />
         </RelativeLayout>
 
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -176,15 +167,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:src="@mipmap/icon_option_setting_auto_close"
-            />
+            android:src="@mipmap/icon_option_setting_auto_close" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="定时关闭"/>
-
+            android:text="定时关闭" />
 
 
         <RelativeLayout
@@ -196,12 +185,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:src="@mipmap/icon_to_my_ktv"
-                />
+                android:src="@mipmap/icon_to_my_ktv" />
         </RelativeLayout>
 
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -213,15 +202,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:src="@mipmap/setting_tool_bt_setup_import"
-            />
+            android:src="@mipmap/setting_tool_bt_setup_import" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="电脑导歌"/>
-
+            android:text="电脑导歌" />
 
 
         <RelativeLayout
@@ -233,12 +220,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:src="@mipmap/icon_to_my_ktv"
-                />
+                android:src="@mipmap/icon_to_my_ktv" />
         </RelativeLayout>
 
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -250,15 +237,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:src="@mipmap/icon_option_setting_action_zone"
-            />
+            android:src="@mipmap/icon_option_setting_action_zone" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="活动专区"/>
-
+            android:text="活动专区" />
 
 
         <RelativeLayout
@@ -270,12 +255,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:src="@mipmap/icon_to_my_ktv"
-                />
+                android:src="@mipmap/icon_to_my_ktv" />
         </RelativeLayout>
 
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -287,15 +272,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:src="@mipmap/icon_option_setting_app_recommend"
-            />
+            android:src="@mipmap/icon_option_setting_app_recommend" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="精品应用"/>
-
+            android:text="精品应用" />
 
 
         <RelativeLayout
@@ -307,8 +290,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:src="@mipmap/icon_to_my_ktv"
-                />
+                android:src="@mipmap/icon_to_my_ktv" />
         </RelativeLayout>
 
 

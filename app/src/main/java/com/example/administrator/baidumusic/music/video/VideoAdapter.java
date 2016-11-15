@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.administrator.baidumusic.R;
+import com.example.administrator.baidumusic.tools.AppValues;
 import com.example.administrator.baidumusic.tools.SingleVolley;
 
 /**
@@ -17,7 +18,7 @@ import com.example.administrator.baidumusic.tools.SingleVolley;
  */
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyViewHolder> {
     private Context context;
-
+    private OnVideoClickListener mOnVideoClickListener;
     private VideoBean bean;
     public void setListBeen(VideoBean bean) {
         Log.d("VideoAdapter", "执行");
@@ -25,9 +26,9 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyViewHolder
         notifyDataSetChanged();
     }
 
-
-
-
+    public void setmOnVideoClickListener(OnVideoClickListener mOnVideoClickListener) {
+        this.mOnVideoClickListener = mOnVideoClickListener;
+    }
 
     public VideoAdapter(Context context) {
         this.context = context;
@@ -46,11 +47,21 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyViewHolder
     
 
     @Override
-    public void onBindViewHolder(VideoAdapter.MyViewHolder myViewHolder, int i) {
+    public void onBindViewHolder(VideoAdapter.MyViewHolder myViewHolder, final int i) {
        myViewHolder.title.setText(bean.getResult().getMv_list().get(i).getTitle());
         myViewHolder.artist.setText(bean.getResult().getMv_list().get(i).getArtist());
         SingleVolley.getInstance().getImage(bean.getResult().getMv_list().get(i).getThumbnail(),
                 myViewHolder.imageView);
+        myViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                mOnVideoClickListener.onVideoClick(AppValues.MV_HEAD +
+                        bean.getResult().getMv_list().get(i).getMv_id() + AppValues.MV_END);
+
+            }
+        });
     }
 
     @Override
@@ -72,5 +83,8 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyViewHolder
             artist = (TextView) itemView.findViewById(R.id.tv_artist_item_video);
             title = (TextView) itemView.findViewById(R.id.tv_title_item_video);
         }
+    }
+    public interface OnVideoClickListener{
+        void onVideoClick(String url);
     }
 }

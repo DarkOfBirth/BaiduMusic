@@ -1,18 +1,17 @@
 package com.example.administrator.baidumusic.player;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.example.administrator.baidumusic.R;
 import com.example.administrator.baidumusic.base.BaseFragment;
 import com.example.administrator.baidumusic.messageevent.LrcEvent;
 import com.example.administrator.baidumusic.messageevent.MusicProgressEvent;
 import com.example.administrator.baidumusic.messageevent.ProgerssHandEvent;
-import com.example.administrator.baidumusic.player.LrcShow.DefaultLrcBuilder;
-import com.example.administrator.baidumusic.player.LrcShow.ILrcBuilder;
-import com.example.administrator.baidumusic.player.LrcShow.ILrcViewListener;
-import com.example.administrator.baidumusic.player.LrcShow.LrcRow;
-import com.example.administrator.baidumusic.player.LrcShow.LrcView;
+import com.example.administrator.baidumusic.player.lrcshow.DefaultLrcBuilder;
+import com.example.administrator.baidumusic.player.lrcshow.ILrcBuilder;
+import com.example.administrator.baidumusic.player.lrcshow.ILrcViewListener;
+import com.example.administrator.baidumusic.player.lrcshow.LrcRow;
+import com.example.administrator.baidumusic.player.lrcshow.LrcView;
 import com.example.administrator.baidumusic.tools.AppValues;
 
 import org.greenrobot.eventbus.EventBus;
@@ -52,8 +51,7 @@ public class RightFragment extends BaseFragment {
         mLrcView.setListener(new ILrcViewListener() {
             //当歌词被用户上下拖动的时候回调该方法,从高亮的那一句歌词开始播放
             public void onLrcSeeked(int newPosition, LrcRow row) {
-                Log.d("RightFragment", "newPosition:" + newPosition);
-                Log.d("RightFragment", row.time + "");
+
                 EventBus.getDefault().post(new ProgerssHandEvent((int) row.time));
             }
         });
@@ -68,7 +66,7 @@ public class RightFragment extends BaseFragment {
         //解析歌词返回LrcRow集合
         List<LrcRow> rows = builder.getLrcRows(lrcString);
         //将得到的歌词集合传给mLrcView用来展示
-        Log.d("RightFragment", "mLrcView eventbus:" + mLrcView);
+
         mLrcView.setLrc(rows);
 
 
@@ -78,7 +76,7 @@ public class RightFragment extends BaseFragment {
     private void LrcRefresh(){
         List<LrcRow> rows = builder.getLrcRows(lrcString);
         //将得到的歌词集合传给mLrcView用来展示
-        Log.d("RightFragment", "mLrcView eventbus:" + mLrcView);
+
         mLrcView.setLrc(rows);
     }
 
@@ -95,7 +93,7 @@ public class RightFragment extends BaseFragment {
     // 传值 接收歌词
     @Subscribe(threadMode = ThreadMode.MAIN,sticky = true)
     public void onMessageEvent(LrcEvent event) {
-        Log.d("RightFragment", "已接受");
+
         lrcString = event.getContent();
 
     }

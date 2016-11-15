@@ -1,5 +1,6 @@
 package com.example.administrator.baidumusic.music.video;
 
+import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,6 +12,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.administrator.baidumusic.R;
 import com.example.administrator.baidumusic.base.BaseFragment;
+import com.example.administrator.baidumusic.databean.VideoDetailBean;
+import com.example.administrator.baidumusic.main.MainActivity;
+import com.example.administrator.baidumusic.music.video.videodetail.VideoDetailFragment;
 import com.example.administrator.baidumusic.tools.AppValues;
 import com.example.administrator.baidumusic.tools.GsonRequest;
 import com.example.administrator.baidumusic.tools.SingleVolley;
@@ -47,16 +51,40 @@ public class VideoFragment extends BaseFragment implements View.OnClickListener 
         adapter = new VideoAdapter(mContext);
 
         rvVideo.setAdapter(adapter);
-        GridLayoutManager manager = new GridLayoutManager(mContext,2);
+        adapter.setmOnVideoClickListener(new VideoAdapter.OnVideoClickListener() {
+            @Override
+            public void onVideoClick(String url) {
+                GsonRequest<VideoDetailBean> request = new GsonRequest<VideoDetailBean>(VideoDetailBean.class
+                        , url, new Response.Listener<VideoDetailBean>() {
+                    @Override
+                    public void onResponse(VideoDetailBean response) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("url",response.getResult().getFiles().getValue31().getFile_link());
+                        VideoDetailFragment videoDetailFragment = new VideoDetailFragment();
+                        videoDetailFragment.setArguments(bundle);
+                        MainActivity activity = (MainActivity) getActivity();
+                        activity.jumpFragment(videoDetailFragment);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+
+                SingleVolley.getInstance().getRequestQueue().add(request);
+            }
+        });
+
+        GridLayoutManager manager = new GridLayoutManager(mContext, 2);
         rvVideo.setLayoutManager(manager);
         updateData(VIDEO);
 
     }
 
 
-
-    private void updateData(String url){
-        GsonRequest<VideoBean> request = new GsonRequest<VideoBean>(VideoBean.class,url,
+    private void updateData(String url) {
+        GsonRequest<VideoBean> request = new GsonRequest<VideoBean>(VideoBean.class, url,
                 new Response.Listener<VideoBean>() {
                     @Override
                     public void onResponse(VideoBean response) {
@@ -73,13 +101,13 @@ public class VideoFragment extends BaseFragment implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.hot_video:
 
                 hotVideo.setTextColor(getResources().getColor(R.color.colorTextBlue));
                 lastVideo.setTextColor(getResources().getColor(R.color.colorTextGray));
                 Toast.makeText(mContext, "点击", Toast.LENGTH_SHORT).show();
-             String newUrl =   AppValues.VIDEO.replace("order=1","order=0");
+                String newUrl = AppValues.VIDEO.replace("order=1", "order=0");
                 Log.d("VideoFragment", newUrl);
                 updateData(newUrl);
                 break;

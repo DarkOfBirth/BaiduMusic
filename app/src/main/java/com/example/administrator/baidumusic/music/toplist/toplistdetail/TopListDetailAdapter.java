@@ -48,4 +48,6 @@ public class TopListDetailAdapter extends RecyclerView.Adapter<CommonVH> {
         }
         return count;
     }
+
+
 }

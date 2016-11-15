@@ -48,7 +48,7 @@
         <TextView
             android:id="@+id/author_center_player"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="31dp"
             android:gravity="center"
             android:text="hello world" />
     </LinearLayout>

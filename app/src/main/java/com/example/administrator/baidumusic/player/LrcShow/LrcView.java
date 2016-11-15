@@ -1,4 +1,4 @@
-package com.example.administrator.baidumusic.player.LrcShow;
+package com.example.administrator.baidumusic.player.lrcshow;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -82,11 +82,11 @@ public class LrcView extends View implements ILrcView {
     /**
      * 歌词字体大小默认值
      **/
-    private int mLrcFontSize = 25;    // font size of lrc
+    private int mLrcFontSize = 30;    // font size of lrc
     /**
      * 歌词字体大小最小值
      **/
-    private int mMinLrcFontSize = 15;
+    private int mMinLrcFontSize = 10;
     /**
      * 歌词字体大小最大值
      **/
@@ -154,6 +154,9 @@ public class LrcView extends View implements ILrcView {
          *	第3步：画出正在播放的那句歌词的下面的可以展示出来的歌词
          */
         // 1、 高亮地画出正在要高亮的的那句歌词
+        if(mHignlightRow > mLrcRows.size()){
+            return;
+        }
         String highlightText = mLrcRows.get(mHignlightRow).content;
         int highlightRowY = height / 2 - mLrcFontSize;
         mPaint.setColor(mHignlightRowColor);

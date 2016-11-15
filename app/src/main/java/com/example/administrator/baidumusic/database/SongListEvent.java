@@ -1,4 +1,4 @@
-package com.example.administrator.baidumusic.messageevent;
+package com.example.administrator.baidumusic.database;
 
 import com.litesuits.orm.db.annotation.PrimaryKey;
 import com.litesuits.orm.db.enums.AssignType;

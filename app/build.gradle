@@ -17,6 +17,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets {
+        main.jniLibs.srcDirs = ['libs']
+    }
+    repositories{
+        flatDir{
+            dirs 'libs' //就是你放aar的目录地址
+        }
+    }
 }
 
 dependencies {
@@ -29,4 +37,15 @@ dependencies {
     compile 'com.wuxiaolong.pullloadmorerecyclerview:library:1.1.1'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile files('lite-orm-1.9.2.jar')
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile files('libs/BmobSDK_3.5.3_20161109.jar')
+    compile files('libs/okhttp-3.3.1.jar')
+    compile files('libs/okio-1.7.0.jar')
+    compile files('libs/org.apache.http.legacy.jar')
+    compile files('libs/rxandroid-1.2.0.jar')
+    compile files('libs/rxjava-1.1.6.jar')
+    compile files('libs/MobCommons-2016.1012.1447.jar')
+    compile files('libs/MobTools-2016.1012.1447.jar')
+    compile name:'SMSSDK-2.1.2',ext:'aar'
+    compile name:'SMSSDKGUI-2.1.2',ext:'aar'
 }

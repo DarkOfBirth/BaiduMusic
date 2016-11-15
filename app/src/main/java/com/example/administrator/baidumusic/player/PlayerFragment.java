@@ -1,22 +1,29 @@
 package com.example.administrator.baidumusic.player;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.baidumusic.R;
 import com.example.administrator.baidumusic.base.BaseFragment;
+import com.example.administrator.baidumusic.base.MyApp;
+import com.example.administrator.baidumusic.databean.MusicItemBean;
 import com.example.administrator.baidumusic.effect.ZoomOutPageTransformer;
 import com.example.administrator.baidumusic.main.MainActivity;
 import com.example.administrator.baidumusic.main.SongListFragment;
+import com.example.administrator.baidumusic.messageevent.ModeEvent;
 import com.example.administrator.baidumusic.messageevent.MusicProgressEvent;
+import com.example.administrator.baidumusic.messageevent.PlayerDataEvent;
 import com.example.administrator.baidumusic.messageevent.ProgerssHandEvent;
 import com.example.administrator.baidumusic.tools.AppValues;
 
@@ -26,6 +33,10 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.onekeyshare.OnekeyShare;
+
 
 /**
  * Created by Administrator on 2016/11/8.
@@ -38,13 +49,19 @@ public class PlayerFragment extends BaseFragment implements View.OnClickListener
     private ImageView play;
     private ImageView playNext;
     private ImageView playPrevious;
+    private ImageView share;
+    private ImageView playMode;
     private SeekBar seekBar;
     private TextView current, total;
+    private MusicItemBean musicItemBean;
+    private int[] modePic = {R.mipmap.bt_list_roundsingle_normal,R.mipmap.bt_list_button_roundplay_normal
+    ,R.mipmap.bt_list_order_normal,R.mipmap.bt_list_random_normal};
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // EventBus.getDefault().register(PlayerFragment.this);
+
     }
 
     @Override
@@ -70,7 +87,12 @@ public class PlayerFragment extends BaseFragment implements View.OnClickListener
         total = bindView(R.id.total_time_player);
         playNext = bindView(R.id.next_player);
         playPrevious = bindView(R.id.previous_player);
+        share = bindView(R.id.share_player);
+        playMode = bindView(R.id.circle_mode_player);
 
+
+        playMode.setOnClickListener(this);
+        share.setOnClickListener(this);
         play.setOnClickListener(this);
         playNext.setOnClickListener(this);
         playPrevious.setOnClickListener(this);
@@ -103,6 +125,12 @@ public class PlayerFragment extends BaseFragment implements View.OnClickListener
 
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(PlayerDataEvent event) {
+        musicItemBean = event.getMusicItemBean();
+        share.setClickable(true);
+        /* Do something */
+    }
 
     @Override
     protected void initData() {
@@ -129,8 +157,18 @@ public class PlayerFragment extends BaseFragment implements View.OnClickListener
         vp.setAdapter(adapter);
         vp.setCurrentItem(1);
 
+        SharedPreferences sp = mContext.getSharedPreferences("circle",Context.MODE_PRIVATE);
+       playMode.setImageResource(modePic[sp.getInt("mode",1)]);
+
+
+
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((MainActivity) getActivity()).unShowBottom();
+    }
 
     @Override
     public void onClick(View view) {
@@ -155,13 +193,30 @@ public class PlayerFragment extends BaseFragment implements View.OnClickListener
 
                 ((MainActivity) getActivity()).playOrPause();
 
+
                 break;
+            // 下一曲
             case R.id.next_player:
                 ((MainActivity) getActivity()).playNext();
                 break;
+            // 上一曲
             case R.id.previous_player:
                 ((MainActivity) getActivity()).playPre();
                 break;
+            // 分享
+            case R.id.share_player:
+                Toast.makeText(mContext, "share", Toast.LENGTH_SHORT).show();
+                Log.d("PlayerFragment", "musicItemBean:" + musicItemBean);
+                if(musicItemBean!=null){
+
+                showShare(musicItemBean);
+                }
+            break;
+            case R.id.circle_mode_player:
+                ((MainActivity) getActivity()).modeChange();
+
+                break;
+
         }
     }
 
@@ -176,6 +231,12 @@ public class PlayerFragment extends BaseFragment implements View.OnClickListener
             total.setText(timeFormat(event.getDuration() / 1000));
 
         }
+    }
+
+    // 传值
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(ModeEvent event) {
+        playMode.setImageResource(modePic[event.getMode()]);
     }
 
     @Override
@@ -193,6 +254,29 @@ public class PlayerFragment extends BaseFragment implements View.OnClickListener
         int sec = seconds % 60;
         return ((min < 10) ? "0" + min : min + "") + ":" + ((sec < 10) ? "0" + sec : sec + "");
 
+    }
+
+
+    private void showShare(MusicItemBean musicItemBean) {
+        ShareSDK.initSDK(MyApp.getmContext());
+
+        OnekeyShare oks = new OnekeyShare();
+        //关闭sso授权
+        oks.disableSSOWhenAuthorize();
+
+
+        oks.setTitle("音乐分享");
+
+        oks.setTitleUrl("http://music.baidu.com/share/" +  musicItemBean.getSonginfo().getSong_id() + "?share=1&fr=app_android");
+        oks.setText(musicItemBean.getSonginfo().getTitle() + "\n" + musicItemBean.getSonginfo().getAuthor());
+        oks.setImageUrl(musicItemBean.getSonginfo().getPic_small());
+       // oks.setTitleUrl("http://mob.com");
+       // oks.setText("分享测试文--Text");
+       // oks.setImageUrl("http://f1.sharesdk.cn/imgs/2014/02/26/owWpLZo_638x960.jpg");
+
+
+
+        oks.show(MyApp.getmContext());
     }
 
 

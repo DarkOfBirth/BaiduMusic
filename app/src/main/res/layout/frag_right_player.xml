@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
 android:background="#837183"
     android:orientation="vertical">
-    <com.example.administrator.baidumusic.player.LrcShow.LrcView
+    <com.example.administrator.baidumusic.player.lrcshow.LrcView
         android:id="@+id/lrcView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

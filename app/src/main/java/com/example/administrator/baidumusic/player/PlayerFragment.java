@@ -54,8 +54,8 @@ public class PlayerFragment extends BaseFragment implements View.OnClickListener
     private SeekBar seekBar;
     private TextView current, total;
     private MusicItemBean musicItemBean;
-    private int[] modePic = {R.mipmap.bt_list_roundsingle_normal,R.mipmap.bt_list_button_roundplay_normal
-    ,R.mipmap.bt_list_order_normal,R.mipmap.bt_list_random_normal};
+    private int[] modePic = {R.mipmap.bt_playpage_roundsingle_press_new,R.mipmap.bt_playpage_loop_press_new,
+    R.mipmap.bt_playpage_order_press_new,R.mipmap.bt_playpage_random_press_new};
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

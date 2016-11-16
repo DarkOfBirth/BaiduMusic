@@ -41,6 +41,7 @@ import cn.sharesdk.onekeyshare.OnekeyShare;
 /**
  * Created by Administrator on 2016/11/8.
  */
+
 public class PlayerFragment extends BaseFragment implements View.OnClickListener {
     private ImageView back;
     private ViewPager vp;
@@ -54,8 +55,8 @@ public class PlayerFragment extends BaseFragment implements View.OnClickListener
     private SeekBar seekBar;
     private TextView current, total;
     private MusicItemBean musicItemBean;
-    private int[] modePic = {R.mipmap.bt_playpage_roundsingle_press_new,R.mipmap.bt_playpage_loop_press_new,
-    R.mipmap.bt_playpage_order_press_new,R.mipmap.bt_playpage_random_press_new};
+    private int[] modePic = {R.mipmap.bt_playpage_roundsingle_press_new, R.mipmap.bt_playpage_loop_press_new,
+            R.mipmap.bt_playpage_order_press_new, R.mipmap.bt_playpage_random_press_new};
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -103,11 +104,8 @@ public class PlayerFragment extends BaseFragment implements View.OnClickListener
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 if (b) {
-                   // EventBus.getDefault().post(new MusicProgressEvent(1,duration, 0));
                     EventBus.getDefault().post(new ProgerssHandEvent(i));
-                    //seekBar.setProgress(i);
                 } else {
-
                     seekBar.setProgress(i);
                 }
             }
@@ -157,9 +155,8 @@ public class PlayerFragment extends BaseFragment implements View.OnClickListener
         vp.setAdapter(adapter);
         vp.setCurrentItem(1);
 
-        SharedPreferences sp = mContext.getSharedPreferences("circle",Context.MODE_PRIVATE);
-       playMode.setImageResource(modePic[sp.getInt("mode",1)]);
-
+        SharedPreferences sp = mContext.getSharedPreferences("circle", Context.MODE_PRIVATE);
+        playMode.setImageResource(modePic[sp.getInt("mode", 1)]);
 
 
     }
@@ -207,11 +204,11 @@ public class PlayerFragment extends BaseFragment implements View.OnClickListener
             case R.id.share_player:
                 Toast.makeText(mContext, "share", Toast.LENGTH_SHORT).show();
                 Log.d("PlayerFragment", "musicItemBean:" + musicItemBean);
-                if(musicItemBean!=null){
+                if (musicItemBean != null) {
 
-                showShare(musicItemBean);
+                    showShare(musicItemBean);
                 }
-            break;
+                break;
             case R.id.circle_mode_player:
                 ((MainActivity) getActivity()).modeChange();
 
@@ -267,13 +264,12 @@ public class PlayerFragment extends BaseFragment implements View.OnClickListener
 
         oks.setTitle("音乐分享");
 
-        oks.setTitleUrl("http://music.baidu.com/share/" +  musicItemBean.getSonginfo().getSong_id() + "?share=1&fr=app_android");
+        oks.setTitleUrl("http://music.baidu.com/share/" + musicItemBean.getSonginfo().getSong_id() + "?share=1&fr=app_android");
         oks.setText(musicItemBean.getSonginfo().getTitle() + "\n" + musicItemBean.getSonginfo().getAuthor());
         oks.setImageUrl(musicItemBean.getSonginfo().getPic_small());
-       // oks.setTitleUrl("http://mob.com");
-       // oks.setText("分享测试文--Text");
-       // oks.setImageUrl("http://f1.sharesdk.cn/imgs/2014/02/26/owWpLZo_638x960.jpg");
-
+        // oks.setTitleUrl("http://mob.com");
+        // oks.setText("分享测试文--Text");
+        // oks.setImageUrl("http://f1.sharesdk.cn/imgs/2014/02/26/owWpLZo_638x960.jpg");
 
 
         oks.show(MyApp.getmContext());

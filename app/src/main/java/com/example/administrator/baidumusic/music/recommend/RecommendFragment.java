@@ -50,7 +50,7 @@ public class RecommendFragment extends BaseFragment {
 
             }
         });
-        SingleVolley.getInstance().getRequestQueue().add(request);
+        SingleVolley.getInstance().getmRequestQueue().add(request);
         LinearLayoutManager manager = new LinearLayoutManager(mContext);
         rvRecommend.setLayoutManager(manager);
     }

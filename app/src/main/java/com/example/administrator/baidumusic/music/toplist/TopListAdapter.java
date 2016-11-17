@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.administrator.baidumusic.R;
+import com.example.administrator.baidumusic.databean.TopListBean;
 import com.example.administrator.baidumusic.tools.SingleVolley;
 
 /**

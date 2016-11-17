@@ -72,7 +72,7 @@ public class VideoFragment extends BaseFragment implements View.OnClickListener 
                     }
                 });
 
-                SingleVolley.getInstance().getRequestQueue().add(request);
+                SingleVolley.getInstance().getmRequestQueue().add(request);
             }
         });
 
@@ -96,7 +96,7 @@ public class VideoFragment extends BaseFragment implements View.OnClickListener 
 
             }
         });
-        SingleVolley.getInstance().getRequestQueue().add(request);
+        SingleVolley.getInstance().getmRequestQueue().add(request);
     }
 
     @Override

@@ -12,6 +12,8 @@ public abstract class BaseActivity extends AppCompatActivity{
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MyApp.addActivity(this);
+
         // 绑定布局
         setContentView(getLayout());
 
@@ -35,6 +37,9 @@ public abstract class BaseActivity extends AppCompatActivity{
 
     protected abstract void initData();
 
-
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        MyApp.removActivity(this);
+    }
 }

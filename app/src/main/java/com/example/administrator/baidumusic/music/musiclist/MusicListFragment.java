@@ -13,6 +13,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.administrator.baidumusic.R;
 import com.example.administrator.baidumusic.base.BaseFragment;
+import com.example.administrator.baidumusic.databean.MusicListBean;
 import com.example.administrator.baidumusic.music.musiclist.musiclistdetail.MusicListDetailFragment;
 import com.example.administrator.baidumusic.tools.AppValues;
 import com.example.administrator.baidumusic.tools.GsonRequest;
@@ -120,7 +121,7 @@ public class MusicListFragment extends BaseFragment implements View.OnClickListe
 
             }
         });
-        SingleVolley.getInstance().getRequestQueue().add(request);
+        SingleVolley.getInstance().getmRequestQueue().add(request);
     }
 
     @Override

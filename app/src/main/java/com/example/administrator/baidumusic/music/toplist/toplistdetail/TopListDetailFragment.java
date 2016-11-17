@@ -84,7 +84,7 @@ public class TopListDetailFragment extends BaseFragment implements View.OnClickL
 
             }
         });
-        SingleVolley.getInstance().getRequestQueue().add(request);
+        SingleVolley.getInstance().getmRequestQueue().add(request);
     }
 
     private void setViewData(TopListDetailBean response) {

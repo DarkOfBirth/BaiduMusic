@@ -1,4 +1,4 @@
-package com.example.administrator.baidumusic.music.toplist;
+package com.example.administrator.baidumusic.databean;
 
 import java.util.List;
 

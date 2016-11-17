@@ -5,6 +5,7 @@ import java.util.Comparator;
 /**
  * 
  * @author xiaanming
+ *  //实例化汉字转拼音类
  *
  */
 public class PinyinComparator implements Comparator<LocalMusicBean> {

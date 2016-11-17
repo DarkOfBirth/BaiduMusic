@@ -14,10 +14,11 @@ import com.example.administrator.baidumusic.tools.SingleVolley;
 
 public class WelcomeActivity extends BaseActivity {
     private ImageView ivWelcome;
+
     @Override
     protected void initData() {
-        SingleVolley.getInstance().getImage(AppValues.WELCOME_IMAGE_URL,ivWelcome);
-        Counter counter = new Counter(5000,1000);
+        SingleVolley.getInstance().getImage(AppValues.WELCOME_IMAGE_URL, ivWelcome);
+        Counter counter = new Counter(5000, 1000);
         counter.start();
     }
 
@@ -53,7 +54,7 @@ public class WelcomeActivity extends BaseActivity {
         public void onFinish() {
             Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
             startActivity(intent);
-        WelcomeActivity.this.finish();
+            WelcomeActivity.this.finish();
 
         }
     }

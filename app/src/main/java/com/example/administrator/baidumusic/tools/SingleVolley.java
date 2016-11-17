@@ -16,14 +16,16 @@ import com.example.administrator.baidumusic.base.MyApp;
  */
 public class SingleVolley {
     private static SingleVolley singleVolley;
-    private RequestQueue requestQueue ;
+    private RequestQueue mRequestQueue;
     private ImageLoader imageLoader;
     private  SingleVolley() {
-        requestQueue = Volley.newRequestQueue(MyApp.getmContext());
-        imageLoader = new ImageLoader(requestQueue, new MemoryCache());
+        mRequestQueue = Volley.newRequestQueue(MyApp.getmContext());
+        imageLoader = new ImageLoader(mRequestQueue, new MemoryCache());
     }
     public static SingleVolley getInstance(){
+        // 只在第一次进行加锁
         if(singleVolley == null) {
+            // 参数:决定的是这把锁的作用范围
             synchronized (SingleVolley.class){
                 if (singleVolley == null){
                     singleVolley = new SingleVolley();
@@ -34,8 +36,8 @@ public class SingleVolley {
     }
 
 
-    public RequestQueue getRequestQueue(){
-        return requestQueue;
+    public RequestQueue getmRequestQueue(){
+        return mRequestQueue;
     }
 
 // 图片
@@ -48,7 +50,7 @@ public class SingleVolley {
        imageLoader.get(url,new BitmapLoader(getBitmap));
 
     }
-
+    // 获取图片
     public class BitmapLoader implements ImageLoader.ImageListener{
         private GetBitmap getBitmap;
 
@@ -72,6 +74,10 @@ public class SingleVolley {
 
     public interface GetBitmap{
         void onGetBitmap(Bitmap bitmap);
+    }
+
+    public void fun(){
+        mRequestQueue.cancelAll(0);
     }
 
 

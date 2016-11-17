@@ -92,13 +92,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <ImageView
-                        android:id="@+id/back_musiclist_detail"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:clickable="true"
-                        android:src="@mipmap/back" />
-
                     <TextView
                         android:id="@+id/title_musiclist_detail"
                         android:layout_width="wrap_content"
@@ -111,6 +104,13 @@
                         android:text="孤独是一场无人问津的重感冒"
                         android:textColor="#ffffff"
                         android:textSize="16sp" />
+
+                    <ImageView
+                        android:id="@+id/back_musiclist_detail"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:clickable="true"
+                        android:src="@mipmap/back" />
 
                 </LinearLayout>
             </android.support.v7.widget.Toolbar>

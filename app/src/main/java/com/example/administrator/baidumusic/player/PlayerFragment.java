@@ -112,7 +112,6 @@ public class PlayerFragment extends BaseFragment implements View.OnClickListener
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
             }
 
             @Override
@@ -151,8 +150,9 @@ public class PlayerFragment extends BaseFragment implements View.OnClickListener
         fragmentList.add(rightFragment);
         PlayerViewPagerAdapter adapter = new PlayerViewPagerAdapter(getChildFragmentManager());
         adapter.setFragmentList(fragmentList);
-        vp.setPageTransformer(true, new ZoomOutPageTransformer());
+
         vp.setAdapter(adapter);
+        vp.setPageTransformer(true, new ZoomOutPageTransformer());
         vp.setCurrentItem(1);
 
         SharedPreferences sp = mContext.getSharedPreferences("circle", Context.MODE_PRIVATE);

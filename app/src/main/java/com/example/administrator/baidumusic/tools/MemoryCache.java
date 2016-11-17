@@ -9,6 +9,7 @@ import com.android.volley.toolbox.ImageLoader;
  * Created by dllo on 16/10/24.
  */
 public class MemoryCache implements ImageLoader.ImageCache{
+
     private LruCache<String,Bitmap> mCache;
     public MemoryCache() {
         int maxSize = (int) (Runtime.getRuntime().maxMemory()/8);

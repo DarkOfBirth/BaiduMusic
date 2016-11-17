@@ -23,7 +23,7 @@ import java.util.concurrent.Executors;
 
 public class DBTools {
 
-    // 此方法为 恶汉式 单例
+    // 此方法为 饿汉式 单例
     // LiteOrm 在使用的时候要使用单例
     private static DBTools dbTools = new DBTools();
     private final ExecutorService mThreadPool;
@@ -38,6 +38,7 @@ public class DBTools {
         // 确保在主线程中执行
         mHandler = new Handler(Looper.getMainLooper());
         int core = Runtime.getRuntime().availableProcessors();
+
         mThreadPool = Executors.newFixedThreadPool(core + 1);
 
     }

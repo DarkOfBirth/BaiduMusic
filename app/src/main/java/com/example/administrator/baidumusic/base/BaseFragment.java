@@ -38,8 +38,8 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //baidumusic SMSSDK.initSDK(mContext, "190849eaa54c4", "7647277fba159c9b599bd51095fb6008");
-        SMSSDK.initSDK(mContext, "190a72647e252", "598abdc50ddd7013a172726943cb4821");
+         SMSSDK.initSDK(mContext, "190849eaa54c4", "7647277fba159c9b599bd51095fb6008");
+        // SMSSDK.initSDK(mContext, "190a72647e252", "598abdc50ddd7013a172726943cb4821");
         Bmob.initialize(mContext, "272912a3169d92925879b4c0c0dc5cb9");
         initData();
     }

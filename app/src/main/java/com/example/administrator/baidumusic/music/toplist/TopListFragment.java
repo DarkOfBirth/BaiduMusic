@@ -11,6 +11,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.administrator.baidumusic.R;
 import com.example.administrator.baidumusic.base.BaseFragment;
+import com.example.administrator.baidumusic.databean.TopListBean;
 import com.example.administrator.baidumusic.music.toplist.toplistdetail.TopListDetailFragment;
 import com.example.administrator.baidumusic.tools.AppValues;
 import com.example.administrator.baidumusic.tools.GsonRequest;
@@ -66,7 +67,7 @@ public class TopListFragment extends BaseFragment {
 
             }
         });
-        SingleVolley.getInstance().getRequestQueue().add(request);
+        SingleVolley.getInstance().getmRequestQueue().add(request);
 
     }
 

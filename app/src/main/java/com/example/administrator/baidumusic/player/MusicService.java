@@ -88,16 +88,16 @@ public class MusicService extends Service {
         builder.setWhen(System.currentTimeMillis());
 
         Intent intentPlay = new Intent(getPackageName() + "play");
-        PendingIntent pendingIntentPlay = PendingIntent.getBroadcast(this,301,intentPlay,PendingIntent.FLAG_UPDATE_CURRENT);
-        views.setOnClickPendingIntent(R.id.play_or_pause_custom_notify,pendingIntentPlay);
+        PendingIntent pendingIntentPlay = PendingIntent.getBroadcast(this, 301, intentPlay, PendingIntent.FLAG_UPDATE_CURRENT);
+        views.setOnClickPendingIntent(R.id.play_or_pause_custom_notify, pendingIntentPlay);
 
         Intent intentNext = new Intent(getPackageName() + "next");
-        PendingIntent pendingIntentNext = PendingIntent.getBroadcast(this,301,intentNext,PendingIntent.FLAG_UPDATE_CURRENT);
-        views.setOnClickPendingIntent(R.id.next_custom_notify,pendingIntentNext);
+        PendingIntent pendingIntentNext = PendingIntent.getBroadcast(this, 301, intentNext, PendingIntent.FLAG_UPDATE_CURRENT);
+        views.setOnClickPendingIntent(R.id.next_custom_notify, pendingIntentNext);
 
         Intent intentClose = new Intent(getPackageName() + "close");
-        PendingIntent pendingIntentClose = PendingIntent.getBroadcast(this,301,intentClose,PendingIntent.FLAG_UPDATE_CURRENT);
-        views.setOnClickPendingIntent(R.id.delete_custom_notify,pendingIntentClose);
+        PendingIntent pendingIntentClose = PendingIntent.getBroadcast(this, 301, intentClose, PendingIntent.FLAG_UPDATE_CURRENT);
+        views.setOnClickPendingIntent(R.id.delete_custom_notify, pendingIntentClose);
 
         Notification notification = builder.build();
         startForeground(110, notification);
@@ -138,17 +138,17 @@ public class MusicService extends Service {
         // 广播的注册
         playCast = new PlayNotifyReceiver();
         IntentFilter playFilter = new IntentFilter(getPackageName() + "play");
-        registerReceiver(playCast,playFilter);
+        registerReceiver(playCast, playFilter);
 
         nextCast = new NextNotifyReceiver();
         IntentFilter nextFilter = new IntentFilter(getPackageName() + "next");
-        registerReceiver(nextCast,nextFilter);
+        registerReceiver(nextCast, nextFilter);
 
         closeCast = new CloseNotifyReceiver();
         IntentFilter closeFilter = new IntentFilter(getPackageName() + "close");
-        registerReceiver(closeCast,closeFilter);
+        registerReceiver(closeCast, closeFilter);
 
-        sp = getSharedPreferences("circle",MODE_PRIVATE);
+        sp = getSharedPreferences("circle", MODE_PRIVATE);
         currentMode = sp.getInt("mode", 1);
 
     }
@@ -239,8 +239,12 @@ public class MusicService extends Service {
 
     // 模式切换
     private void modeChangeInner() {
-        currentMode = (currentMode + 1) % 4 ;
-    EventBus.getDefault().postSticky(new ModeEvent(currentMode));
+        currentMode = (currentMode + 1) % 4;
+        EventBus.getDefault().postSticky(new ModeEvent(currentMode));
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putInt("mode", currentMode);
+        editor.apply();
+
     }
 
     private void rePostDataInner() {
@@ -256,7 +260,7 @@ public class MusicService extends Service {
 
 
         Log.d("MusicService", "进入播放");
-        if(item.getBitrate().getShow_link() == null){
+        if (item.getBitrate().getShow_link() == null) {
             playNextInner();
         }
         path = item.getBitrate().getShow_link();
@@ -296,7 +300,7 @@ public class MusicService extends Service {
 
     // 下一曲播放
     public void playNextInner() {
-       // Log.d("MusicService111", "count" + this);
+        // Log.d("MusicService111", "count" + this);
 
         DBTools.getInstance().queryMusicInfo(SongListEvent.class, new DBTools.OnQueryMusicInfo<SongListEvent>() {
             @Override
@@ -306,7 +310,7 @@ public class MusicService extends Service {
                     int state = query.get(i).getState();
                     String musicUrl = null;
                     if (AppValues.PLAY_STATE == state) {
-                        switch (currentMode){
+                        switch (currentMode) {
                             case 0:
                                 Log.d("MusicService", "单曲循环");
 
@@ -321,7 +325,7 @@ public class MusicService extends Service {
                                         query.get((i + 1) % query.size()).getSongId(), "state", AppValues.PLAY_STATE);
 
 
-                                 musicUrl = AppValues.PLAY_SONG_HEAD + query.get((i + 1) % query.size()).getSongId();
+                                musicUrl = AppValues.PLAY_SONG_HEAD + query.get((i + 1) % query.size()).getSongId();
                                 getMusicInfo(musicUrl);
                                 break;
                             case 2:
@@ -329,7 +333,7 @@ public class MusicService extends Service {
                                         query.get(i).getSongId(), "state", AppValues.STOP_STATE);
                                 DBTools.getInstance().modifyMusicInfo(SongListEvent.class,
                                         query.get((i + 1) % query.size()).getSongId(), "state", AppValues.PLAY_STATE);
-                                 musicUrl = AppValues.PLAY_SONG_HEAD + query.get((i + 1) % query.size()).getSongId();
+                                musicUrl = AppValues.PLAY_SONG_HEAD + query.get((i + 1) % query.size()).getSongId();
                                 getMusicInfo(musicUrl);
                                 break;
                             case 3:
@@ -392,7 +396,7 @@ public class MusicService extends Service {
             @Override
             public void onResponse(MusicItemBean response) {
                 //  addPlayList(response);
-                if(response == null){
+                if (response == null) {
                     playNextInner();
                     return;
                 }
@@ -413,7 +417,7 @@ public class MusicService extends Service {
 
             }
         });
-        SingleVolley.getInstance().getRequestQueue().add(request);
+        SingleVolley.getInstance().getmRequestQueue().add(request);
     }
 
     /**
@@ -438,7 +442,7 @@ public class MusicService extends Service {
             }
         });
 
-        SingleVolley.getInstance().getRequestQueue().add(lrcRequest);
+        SingleVolley.getInstance().getmRequestQueue().add(lrcRequest);
     }
 
     public void playInner() {
@@ -512,9 +516,9 @@ public class MusicService extends Service {
         @Override
         public void onReceive(Context context, Intent intent) {
 
-         if((getPackageName() + "play").equals(intent.getAction())){
+            if ((getPackageName() + "play").equals(intent.getAction())) {
                 Log.d("PlayNotifyReceiver", "play");
-             ((MyApp)getApplication()).getInstance().playOrPause();
+                ((MyApp) getApplication()).getInstance().playOrPause();
             }
 
         }
@@ -533,6 +537,7 @@ public class MusicService extends Service {
 
         }
     }
+
     // 通知栏删除点击事件接收器
     public class CloseNotifyReceiver extends BroadcastReceiver {
 
@@ -540,7 +545,7 @@ public class MusicService extends Service {
         public void onReceive(Context context, Intent intent) {
 
             if ((getPackageName() + "close").equals(intent.getAction())) {
-               onDestroy();
+                onDestroy();
             }
 
         }
@@ -549,17 +554,17 @@ public class MusicService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        // 停止并释放
+        mediaPlayer.stop();
+        mediaPlayer.release();
         EventBus.getDefault().unregister(this);
         unregisterReceiver(playCast);
         unregisterReceiver(nextCast);
         unregisterReceiver(closeCast);
         stopForeground(true);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putInt("mode",currentMode);
-        editor.commit();
-        ((MyApp)getApplication()).getInstance().finish();
-    }
 
+        ((MyApp) getApplication()).getInstance().finish();
+    }
 
 
 }

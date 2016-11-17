@@ -107,7 +107,7 @@ public class MusicListDetailFragment extends BaseFragment implements View.OnClic
 
             }
         });
-        SingleVolley.getInstance().getRequestQueue().add(request);
+        SingleVolley.getInstance().getmRequestQueue().add(request);
     }
 
     // 给上半部分赋值, 即背景, 图片
@@ -165,7 +165,6 @@ public class MusicListDetailFragment extends BaseFragment implements View.OnClic
                                     Log.d("Sysout", "imageView.getWidth():" + imageView.getWidth());
 
                                     imageView.setImageBitmap(bitmap);
-                                } else {
                                 }
                             }
                         });
